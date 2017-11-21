@@ -10,6 +10,16 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+	<style type="text/css">
+		.videoViews:after{
+			content: ' vues';
+		}
+		.bullet:before{
+			content: ' \2022  ';
+		}
+
+	</style>
 </head>
 	
 <body>
@@ -88,7 +98,31 @@
 						</ul>
 					</nav>
 
-					<section id="search-results-videos" class="mx-0 px-0 container text-center placeholders"></section>
+					<section id="search-results-videos" class="mx-0 px-0 container text-center placeholders">
+						<div class="form-group row">
+							<div class="form-check">
+        						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" checked filter="videoTitle"> Titre
+          						</label>
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" checked filter="videoAuthor"> Auteur
+          						</label>
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" checked filter="videoViews"> Vues
+          						</label>'
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" checked filter="videoDate"> Date
+          						</label>
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" checked filter="videoDescr"> Description
+          						</label>
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" checked filter="videoDuration"> Durée
+          						</label>
+        					</div>
+     					</div>
+     					<div id="search-results-videos-div"></div>
+					</section>
 
 					<section id="search-results-authors" class="mx-0 px-0 container text-center placeholders d-none"></section>
 
@@ -163,6 +197,16 @@ $(document).ready(function () {
 		currentPage.html(parseInt(currentPage.html()) - 1);
 		displayVideos(searchTerm, $(this).attr('token'));
 	});
+
+	//checkbox filtre
+	$('.form-check input').click(function(){
+		var elem = $('.' + $(this).attr('filter'));
+		if($(this).prop('checked')){
+			elem.removeClass('d-none');
+		}else{
+			elem.addClass('d-none');
+		}
+	});
 });
 
 function displayVideos(searchTerm, pageToken = undefined) {
@@ -188,7 +232,7 @@ function displayVideos(searchTerm, pageToken = undefined) {
 
 function displayVideoInfos(){
 
-	$('#search-results-videos > div').each(function(index, element){
+	$('#search-results-videos-div > div').each(function(index, element){
 
 		var videoId = $(element).attr('video');
 
@@ -243,23 +287,23 @@ function displayResults(results) {
 			html += '</div>';
 			html += '<div class="col-9">';
 				html += '<a href="https://www.youtube.com/watch?v=' + videoId + '">';
-					html += '<h4 class="text-left">' + title + '</h4>';
+					html += '<h4 class="text-left videoTitle">' + title + '</h4>';
 				html += '</a>';
 				html += '<p class="text-left my-0">';
-					html += '<a href="https://www.youtube.com/channel/' + channelId + '">';
+					html += '<vidChan class="videoAuthor bullet"><a href="https://www.youtube.com/channel/' + channelId + '">';
 						html += '<em>' + channel + '</em>';
-					html += '</a>';
-					html += ' &#8226; <span class="viewCount"> </span> vues';
-					html += ' &#8226; Publiée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() );
+					html += '</a></vidChan>';
+					html += '<span class="viewCount videoViews bullet"> </span>';
+					html += '<vidDate class="videoDate bullet">Publiée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</vidDate>';
 				html += '</p>';
-				html += '<p class="text-left">' + description + '</p>';
-				html += '<p class="duration text-left"></p>';
+				html += '<p class="text-left videoDescr">' + description + '</p>';
+				html += '<p class="duration text-left videoDuration"></p>';
 			html += '</div>';
-		html += '</div>'
+		html += '</div>';
 
 	});
 	
-	$('#search-results-videos').html(html);
+	$('#search-results-videos-div').html(html);
 }
 
 function formatTime(duration){

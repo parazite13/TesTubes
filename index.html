@@ -99,7 +99,7 @@
 					</nav>
 
 					<section id="search-results-videos" class="mx-0 px-0 container text-center placeholders">
-						<div class="form-group row">
+						<div class="form-group row ml-1">
 							<div class="form-check">
         						<label class="form-check-label mx-1">
             						<input class="form-check-input" type="checkbox" checked filter="videoTitle"> Titre
@@ -109,7 +109,7 @@
           						</label>
           						<label class="form-check-label mx-1">
             						<input class="form-check-input" type="checkbox" checked filter="videoViews"> Vues
-          						</label>'
+          						</label>
           						<label class="form-check-label mx-1">
             						<input class="form-check-input" type="checkbox" checked filter="videoDate"> Date
           						</label>
@@ -164,6 +164,7 @@ $(document).ready(function () {
 		event.preventDefault();
 		searchTerm = $('#query').val();
 		displayVideos(searchTerm);
+		getAuthors(searchTerm);
 	});
 
 	// Items de recherche
@@ -171,6 +172,7 @@ $(document).ready(function () {
 		searchTerm = $(this).attr('search');
 		$('#query').val($(this).html());
 		displayVideos(searchTerm);
+		getAuthors(searchTerm);
 	});
 
 	// Menu onglet
@@ -191,11 +193,13 @@ $(document).ready(function () {
 			$(this).removeClass('d-none')
 		}
 		displayVideos(searchTerm, $(this).attr('token'));
+		getAuthors(searchTerm, $(this).attr('token'));
 	});
 	$('.page-previous').click(function(event){
 		var currentPage = $('.current-page');
 		currentPage.html(parseInt(currentPage.html()) - 1);
 		displayVideos(searchTerm, $(this).attr('token'));
+		getAuthors(searchTerm, $(this).attr('token'));
 	});
 
 	//checkbox filtre
@@ -230,6 +234,68 @@ function displayVideos(searchTerm, pageToken = undefined) {
 	});
 }
 
+function getAuthors(searchTerm, pageToken = undefined) {
+
+	// Affiche la pagination
+	$('.pagination').removeClass('d-none');
+
+	var url = 'https://www.googleapis.com/youtube/v3/search';
+	var params = {
+		maxResults: '10',
+		part: 'snippet',
+		key: 'AIzaSyCKqVcvBxViYhySoAa0ArgkjN0X1bucHmw',
+		type: 'channel',
+		pageToken: pageToken,
+		q: searchTerm
+	};
+
+	$.getJSON(url, params, function (searchInfo) {
+		displayAuthors(searchInfo);
+		displayChannelInfos();
+	});
+}
+
+function displayAuthors(results){
+	//var nbResults = results.pageInfo.totalResults;
+
+	console.log(results);
+
+	var html = "";
+	var entries = results.items;
+
+	// html += '<p id="number-results" class="text-left">';
+	// 	html += '<small>';
+	// 		html += 'Environ ' + formatInt(nbResults) + ' resultats';
+	// 	html += '</small>';
+	// html += '</p>';
+
+	$.each(entries, function (index, value) {
+
+		var channel = value.snippet.channelTitle;
+		var channelId = value.snippet.channelId;
+		var thumbnail = value.snippet.thumbnails.medium.url;
+
+		html += '<div id="channel-' + channelId + '" channel="' + channelId + '" class="row p-2">';
+			html += '<div class="col-1 py-2 px-0">';
+				html += '<a href="https://www.youtube.com/watch?v=' + channelId + '">';
+		 			html += '<img src="' + thumbnail + '" style="width:100%;height:auto">';
+				html += '</a>';
+			html += '</div>';
+			html += '<div class="col-9">';
+				html += '<p class="text-left my-0">';
+					html += '<a href="https://www.youtube.com/channel/' + channelId + '">';
+						html += '<em>' + channel + '</em>';
+					html += '</a>';
+				html += '</p>';
+				html += '<p class="nbVideos text-left"></p>';
+			html += '</div>';
+		html += '</div>';
+
+	});
+	
+	$('#search-results-authors').html(html);
+}
+
 function displayVideoInfos(){
 
 	$('#search-results-videos-div > div').each(function(index, element){
@@ -250,12 +316,30 @@ function displayVideoInfos(){
 	});
 }
 
+function displayChannelInfos(){
+
+	$('#search-results-authors > div').each(function(index, element){
+
+		var channelId = $(element).attr('channel');
+
+		var url = 'https://www.googleapis.com/youtube/v3/channels';
+		var params = {
+			part: 'statistics',
+			id: channelId,
+			key:'AIzaSyCKqVcvBxViYhySoAa0ArgkjN0X1bucHmw'
+		}
+
+		$.getJSON(url, params, function (channelInfo) {
+			$('#channel-' + channelId + ' .nbVideos').html(formatInt(channelInfo.items[0].statistics.videoCount) + " vidéo(s)");
+		});
+	});
+}
+
 function displayResults(results) {
 
 	var nbResults = results.pageInfo.totalResults;
 
 	$('#search-results-title').html('Résultats');
-	$('#number-results').html();
 	
 	$('.page-previous').attr('token', results.prevPageToken);
 	$('.page-next').attr('token', results.nextPageToken);

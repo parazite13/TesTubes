@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>TesTubes</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+	
+<body>
+	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse d-inline-block">
+
+		<a class="navbar-brand" href="#" style="width: 20%;">TesTubes</a>
+
+		<form id="search-term" class="d-inline-block form-inline mt-2 mt-md-0" style="width: 70%;">
+			<input id="query" class="form-control mr-sm-2" type="text" placeholder="Rechercher" style="width: 70%;">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar fixed-top" style="margin-top: 95px;">
+				<ul id="search-items" class="nav nav-pills flex-column">
+					<li class="nav-item">
+						<a class="nav-link" search="big data" href="#">Big Data</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" search="3D" href="#">3D</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" search="analyse d'image" href="#">Analyse d'image</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" search="musique" href="#">Musique</a>
+					</li>
+				</ul>
+			</nav>
+
+			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" style="margin-top: 95px;">
+
+				<ul id="tabbed-menu" class="nav nav-tabs">
+					<li class="nav-item">
+						<a href="#" data-content="search-results-videos" class="nav-link active">
+							Vidéos
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" data-content="search-results-authors" class="nav-link">
+							Authors
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#" data-content="search-results-map" class="nav-link">
+							Map
+						</a>
+					</li>
+				</ul>
+	
+				<div class="header-results">
+					<h1 id="search-results-title" style="position: absolute;"></h1>
+				</div>
+
+				<div id="details-content">
+
+					<nav aria-label="Page navigation example" class="my-2">
+						<ul class="pagination mx-auto d-none" style="width: fit-content">
+							<li class="page-item">
+								<a token="" class="page-link page-previous" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link current-page" href="#">1</a>
+							</li>
+							<li>
+								<a token="" class="page-link page-next" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+
+					<section id="search-results-videos" class="mx-0 px-0 container text-center placeholders"></section>
+
+					<section id="search-results-authors" class="mx-0 px-0 container text-center placeholders d-none"></section>
+
+					<section id="search-results-map" class="mx-0 px-0 container text-center placeholders d-none"></section>
+
+					<nav aria-label="Page navigation example">
+						<ul class="pagination mx-auto d-none" style="width: fit-content">
+							<li class="page-item">
+								<a token="" class="page-link page-previous" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span>
+								</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link current-page" href="#">1</a>
+							</li>
+							<li>
+								<a token="" class="page-link page-next" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+									<span class="sr-only">Next</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</main>
+		</div>
+	</div>
+</body>
+
+<script type="text/javascript">
+
+var searchTerm;
+
+$(document).ready(function () {
+
+	// Bouton de recherche
+	$('#search-term').submit(function (event) {
+		event.preventDefault();
+		searchTerm = $('#query').val();
+		displayVideos(searchTerm);
+	});
+
+	// Items de recherche
+	$("#search-items a").click(function(event){
+		searchTerm = $(this).attr('search');
+		$('#query').val($(this).html());
+		displayVideos(searchTerm);
+	});
+
+	// Menu onglet
+	$('#tabbed-menu a').click(function(){
+		$('#tabbed-menu a').removeClass('active');
+		$(this).addClass('active');
+		$('#details-content > section').addClass('d-none');
+		$('#' + $(this).attr('data-content')).removeClass('d-none');
+	});
+
+	// Pagination
+	$('.page-next').click(function(event){
+		var currentPage = $('.current-page');
+		currentPage.html(parseInt(currentPage.html()) + 1);
+		if(parseInt(currentPage.html()) <= 1){
+			$(this).addClass('d-none');
+		}else{
+			$(this).removeClass('d-none')
+		}
+		displayVideos(searchTerm, $(this).attr('token'));
+	});
+	$('.page-previous').click(function(event){
+		var currentPage = $('.current-page');
+		currentPage.html(parseInt(currentPage.html()) - 1);
+		displayVideos(searchTerm, $(this).attr('token'));
+	});
+});
+
+function displayVideos(searchTerm, pageToken = undefined) {
+
+	// Affiche la pagination
+	$('.pagination').removeClass('d-none');
+
+	var url = 'https://www.googleapis.com/youtube/v3/search';
+	var params = {
+		maxResults: '10',
+		part: 'snippet',
+		key: 'AIzaSyCKqVcvBxViYhySoAa0ArgkjN0X1bucHmw',
+		type: 'video',
+		pageToken: pageToken,
+		q: searchTerm
+	};
+
+	$.getJSON(url, params, function (searchInfo) {
+		displayResults(searchInfo);
+		displayVideoInfos();
+	});
+}
+
+function displayVideoInfos(){
+
+	$('#search-results-videos > div').each(function(index, element){
+
+		var videoId = $(element).attr('video');
+
+		var url = 'https://www.googleapis.com/youtube/v3/videos';
+		var params = {
+			part: 'contentDetails,statistics',
+			id: videoId,
+			key:'AIzaSyCKqVcvBxViYhySoAa0ArgkjN0X1bucHmw'
+		}
+
+		$.getJSON(url, params, function (videoInfo) {
+			$('#video-' + videoId + ' .viewCount').html(formatInt(videoInfo.items[0].statistics.viewCount));
+			$('#video-' + videoId + ' .duration').html('Durée : ' + formatTime(videoInfo.items[0].contentDetails.duration));
+		});
+	});
+}
+
+function displayResults(results) {
+
+	var nbResults = results.pageInfo.totalResults;
+
+	$('#search-results-title').html('Résultats');
+	$('#number-results').html();
+	
+	$('.page-previous').attr('token', results.prevPageToken);
+	$('.page-next').attr('token', results.nextPageToken);
+
+	var html = "";
+	var entries = results.items;
+
+	html += '<p id="number-results" class="text-left">';
+		html += '<small>';
+			html += 'Environ ' + formatInt(nbResults) + ' resultats';
+		html += '</small>';
+	html += '</p>';
+	
+	$.each(entries, function (index, value) {
+
+		var title = value.snippet.title;
+		var description = value.snippet.description;
+		var channel = value.snippet.channelTitle;
+		var thumbnail = value.snippet.thumbnails.medium.url;
+		var videoId = value.id.videoId;
+		var channelId = value.snippet.channelId;
+		var publishedAt = new Date(value.snippet.publishedAt);
+	 
+		html += '<div id="video-' + videoId + '" video="' + videoId + '" class="row p-2">';
+			html += '<div class="col-3 py-2 px-0">';
+				html += '<a href="https://www.youtube.com/watch?v=' + videoId + '">';
+		 			html += '<img src="' + thumbnail + '" style="width:100%;height:auto">';
+				html += '</a>';
+			html += '</div>';
+			html += '<div class="col-9">';
+				html += '<a href="https://www.youtube.com/watch?v=' + videoId + '">';
+					html += '<h4 class="text-left">' + title + '</h4>';
+				html += '</a>';
+				html += '<p class="text-left my-0">';
+					html += '<a href="https://www.youtube.com/channel/' + channelId + '">';
+						html += '<em>' + channel + '</em>';
+					html += '</a>';
+					html += ' &#8226; <span class="viewCount"> </span> vues';
+					html += ' &#8226; Publiée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() );
+				html += '</p>';
+				html += '<p class="text-left">' + description + '</p>';
+				html += '<p class="duration text-left"></p>';
+			html += '</div>';
+		html += '</div>'
+
+	});
+	
+	$('#search-results-videos').html(html);
+}
+
+function formatTime(duration){
+	return duration.substr(2).toLowerCase();
+}
+
+function formatDate(day, month, year){
+	if(day < 10) day = "0" + day;
+	if(month < 10) month = "0" + month;
+
+	return day + '/' + month + '/' + year;
+}
+
+function formatInt(nStr){
+
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+			x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+	}
+	
+	return x1 + x2;
+}
+
+</script>
+</html>

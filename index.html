@@ -79,10 +79,10 @@
 
 				<div id="details-content">
 
-					<nav aria-label="Page navigation example" class="my-2">
+					<nav class="my-2">
 						<ul class="pagination mx-auto d-none" style="width: fit-content">
 							<li class="page-item">
-								<a token="" class="page-link page-previous" href="#" aria-label="Previous">
+								<a token="" class="page-link page-previous d-none" href="#" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 									<span class="sr-only">Previous</span>
 								</a>
@@ -128,13 +128,27 @@
 					<section id="search-results-authors" class="mx-0 px-0 container text-center placeholders d-none"></section>
 
 					<section id="search-results-map" class="mx-0 px-0 container text-center placeholders d-none">
+
+						<form id="form-map" class="form-inline my-1" onSubmit="return false;">
+							<label class="sr-only" for="center-location">Zone de recherche</label>
+							<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="center-location" placeholder="Ex: Marseille">
+
+							<label class="sr-only" for="radius">Km</label>
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<input type="number" max="1000" class="form-control" id="radius">
+								<div class="input-group-addon">Km</div>
+							</div>
+
+							<button id="submit-map" type="submit" role="button" class="btn btn-primary">Rechercher</button>
+						</form> 
+
 						<div id="map" style="height: 70vh;"></div>
 					</section>
 
-					<nav aria-label="Page navigation example">
+					<nav>
 						<ul class="pagination mx-auto d-none" style="width: fit-content">
 							<li class="page-item">
-								<a token="" class="page-link page-previous" href="#" aria-label="Previous">
+								<a token="" class="page-link page-previous d-none" href="#" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
 									<span class="sr-only">Previous</span>
 								</a>
@@ -159,6 +173,7 @@
 
 var searchTerm;
 var map;
+var markerCoord;
 
 $(document).ready(function () {
 
@@ -189,19 +204,24 @@ $(document).ready(function () {
 		var currentPage = $('.current-page');
 		currentPage.html(parseInt(currentPage.html()) + 1);
 		if(parseInt(currentPage.html()) <= 1){
-			$(this).addClass('d-none');
+			$('.page-previous').addClass('d-none');
 		}else{
-			$(this).removeClass('d-none')
+			$('.page-previous').removeClass('d-none')
 		}
 		displayVideos(searchTerm, $(this).attr('token'));
 	});
 	$('.page-previous').click(function(event){
 		var currentPage = $('.current-page');
 		currentPage.html(parseInt(currentPage.html()) - 1);
+		if(parseInt(currentPage.html()) <= 1){
+			$(this).addClass('d-none');
+		}else{
+			$(this).removeClass('d-none')
+		}
 		displayVideos(searchTerm, $(this).attr('token'));
 	});
 
-	//checkbox filtre
+	// Checkbox filtre
 	$('.form-check input').click(function(){
 		var elem = $('.' + $(this).attr('filter'));
 		if($(this).prop('checked')){
@@ -210,25 +230,27 @@ $(document).ready(function () {
 			elem.addClass('d-none');
 		}
 	});
+
+	// Affichage de la carte
+	$('#submit-map').click(function(){
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode( {address: $('#center-location').val()}, function(results, status){
+			if(status == google.maps.GeocoderStatus.OK){
+				markerCoord = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
+				displayMap(markerCoord, $('#radius').val() + "km");
+			}
+		});
+	});
 });
 
 function initMap(){
 
-	navigator.geolocation.getCurrentPosition(function(position){
-		var markerCoord = {lat: position.coords.latitude, lng: position.coords.longitude};
-        map = new google.maps.Map(document.getElementById('map'), {
-        	zoom: 4,
-        	center: markerCoord
-        });
-        var marker = new google.maps.Marker({
-        	position: markerCoord,
-        	map: map
-        });
-        displayMap(markerCoord, "100km");
-	}, function(error){
-		console.log(error);
-	});
-		
+	markerCoord = {lat: 43, lng: 5};
+    map = new google.maps.Map(document.getElementById('map'), {
+    	zoom: 6,
+    	center: markerCoord
+    });
+	
 }
 
 function displayMap(coords, radius){
@@ -265,10 +287,20 @@ function displayMap(coords, radius){
 	    		$.getJSON(url, params, function (result) {
 					var markerCoord = {lat: result.items[0].recordingDetails.location.latitude, lng: result.items[0].recordingDetails.location.longitude};
 
+					console.log(result);
+
+					var infoWindow = new google.maps.InfoWindow({
+        				content: '<a href="https://www.youtube.com/watch?v=' + result.items[0].id + '">'+result.items[0].snippet.title+'</a>'
+        			});
+
 					var marker = new google.maps.Marker({
 			        	position: markerCoord,
 			        	map: map
 			        });
+
+			        marker.addListener('click', function() {
+          				infoWindow.open(map, marker);
+        			});
 
 				});
 
@@ -315,7 +347,6 @@ function displayVideoInfos(){
 		$.getJSON(url, params, function (videoInfo) {
 			$('#video-' + videoId + ' .viewCount').html(formatInt(videoInfo.items[0].statistics.viewCount));
 			$('#video-' + videoId + ' .duration').html('Durée : ' + formatTime(videoInfo.items[0].contentDetails.duration));
-			console.log(videoInfo.recordingDetails);
 		});
 	});
 }

@@ -38,3 +38,7 @@
 .bullet:before{
 	content: ' \2022  ';
 }
+
+#pseudo-display{
+	color: white;
+}

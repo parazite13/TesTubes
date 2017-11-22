@@ -10,9 +10,8 @@
 	
 	<?php getHeader(); ?>
 
-	<?php if(isAdmin()) echo "CA MARCHE !" ?>
-
-	
+	<div class="overlay"></div>
+	<div class="d-none" id="blur" onclick="$('.overlay').addClass('d-none'); $(this).addClass('d-none');" style="position:fixed; z-index:1100; height:100vh; width:100vw; background-color:rgba(0, 0, 0, 0.5)"></div>
 	<div class="container-fluid">
 		<div class="row">
 			<nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar fixed-top margin-top">

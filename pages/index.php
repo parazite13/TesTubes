@@ -44,7 +44,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="#" data-content="search-results-map" class="nav-link">
+						<a href="#" data-content="search-results-map" class="nav-link" onclick="initMap()">
 							Carte
 						</a>
 					</li>
@@ -148,7 +148,6 @@
 	
 
 	<?php getFooter(); ?>
-
 
 	<script type="text/javascript" src="<?= ABSURL ?>js/script.js"></script>
 

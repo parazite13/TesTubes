@@ -76,13 +76,13 @@ $(document).ready(function () {
 
 function initMap(){
 
-	markerCoord = {lat: 43, lng: 5};
-    map = new google.maps.Map(document.getElementById('map'), {
-    	zoom: 6,
-    	center: markerCoord
-    });
-	
-}
+		markerCoord = {lat: 43, lng: 5};
+	    map = new google.maps.Map(document.getElementById('map'), {
+	    	zoom: 6,
+	    	center: markerCoord
+	    });
+		
+	}
 
 function displayMap(coords, radius){
 

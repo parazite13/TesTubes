@@ -1,0 +1,7 @@
+.videoViews:after{
+	content: ' vues';
+}
+
+.bullet:before{
+	content: ' \2022  ';
+}

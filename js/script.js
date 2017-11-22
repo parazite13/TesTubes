@@ -26,6 +26,13 @@ $(document).ready(function () {
 		$(this).addClass('active');
 		$('#details-content > section').addClass('d-none');
 		$('#' + $(this).attr('data-content')).removeClass('d-none');
+
+		// Enleve la pagination pour la map
+		if($(this).html().trim() == "Carte"){
+			$('.pagination').addClass('d-none');
+		}else{
+			$('.pagination').removeClass('d-none');
+		}
 	});
 
 	// Pagination
@@ -64,11 +71,16 @@ $(document).ready(function () {
 
 	// Affichage de la carte
 	$('#submit-map').click(function(){
+
+		var spinner = $(this).find('.fa-spin');
+		spinner.removeClass('d-none');
+
 		var geocoder = new google.maps.Geocoder();
 		geocoder.geocode( {address: $('#center-location').val()}, function(results, status){
 			if(status == google.maps.GeocoderStatus.OK){
 				markerCoord = {lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()};
 				displayMap(markerCoord, $('#radius').val() + "km");
+				spinner.addClass('d-none');
 			}
 		});
 	});
@@ -225,16 +237,8 @@ function getAuthors(searchTerm, pageToken = undefined) {
 
 function displayAuthors(results){
 	
-	//var nbResults = results.pageInfo.totalResults;
-
 	var html = "";
 	var entries = results.items;
-
-	// html += '<p id="number-results" class="text-left">';
-	// 	html += '<small>';
-	// 		html += 'Environ ' + formatInt(nbResults) + ' resultats';
-	// 	html += '</small>';
-	// html += '</p>';
 
 	$.each(entries, function (index, value) {
 
@@ -242,21 +246,21 @@ function displayAuthors(results){
 		var channelId = value.snippet.channelId;
 		var thumbnail = value.snippet.thumbnails.medium.url;
 
-		html += '<div id="channel-' + channelId + '" channel="' + channelId + '" class="row p-2">';
-			html += '<div class="col-1 py-2 px-0">';
-				html += '<a href="https://www.youtube.com/watch?v=' + channelId + '">';
-		 			html += '<img src="' + thumbnail + '" style="width:100%;height:auto">';
-				html += '</a>';
-			html += '</div>';
-			html += '<div class="col-9">';
-				html += '<p class="text-left my-0">';
-					html += '<a href="https://www.youtube.com/channel/' + channelId + '">';
-						html += '<em>' + channel + '</em>';
-					html += '</a>';
-				html += '</p>';
-				html += '<p class="nbVideos text-left"></p>';
-			html += '</div>';
-		html += '</div>';
+		html += '<div id="channel-' + channelId + '" channel="' + channelId + '" class="row p-2">\
+			<div class="col-1 py-2 px-0">\
+				<a href="https://www.youtube.com/watch?v=' + channelId + '">\
+		 			<img src="' + thumbnail + '" style="width:100%;height:auto">\
+				</a>\
+			</div>\
+			<div class="col-9">\
+				<p class="text-left my-0">\
+					<a href="https://www.youtube.com/channel/' + channelId + '">\
+						<em>' + channel + '</em>\
+					</a>\
+				</p>\
+				<p class="nbVideos text-left"></p>\
+			</div>\
+		</div>';
 
 	});
 	
@@ -314,11 +318,12 @@ function displayResults(results) {
 	var html = "";
 	var entries = results.items;
 
-	html += '<p id="number-results" class="text-left">';
-		html += '<small>';
-			html += 'Environ ' + formatInt(nbResults) + ' resultats';
-		html += '</small>';
-	html += '</p>';
+	html += 
+		'<p id="number-results" class="text-left">\
+			<small>\
+				Environ ' + formatInt(nbResults) + ' resultats\
+			</small>\
+		</p>';
 	
 	$.each(entries, function (index, value) {
 
@@ -330,27 +335,28 @@ function displayResults(results) {
 		var channelId = value.snippet.channelId;
 		var publishedAt = new Date(value.snippet.publishedAt);
 	 
-		html += '<div id="video-' + videoId + '" video="' + videoId + '" class="row p-2">';
-			html += '<div class="col-3 py-2 px-0">';
-				html += '<a href="https://www.youtube.com/watch?v=' + videoId + '">';
-		 			html += '<img src="' + thumbnail + '" style="width:100%;height:auto">';
-				html += '</a>';
-			html += '</div>';
-			html += '<div class="col-9">';
-				html += '<a href="https://www.youtube.com/watch?v=' + videoId + '">';
-					html += '<h4 class="text-left videoTitle">' + title + '</h4>';
-				html += '</a>';
-				html += '<p class="text-left my-0">';
-					html += '<vidChan class="videoAuthor bullet"><a href="https://www.youtube.com/channel/' + channelId + '">';
-						html += '<em>' + channel + '</em>';
-					html += '</a></vidChan>';
-					html += '<span class="viewCount videoViews bullet"> </span>';
-					html += '<vidDate class="videoDate bullet">Publiée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</vidDate>';
-				html += '</p>';
-				html += '<p class="text-left videoDescr">' + description + '</p>';
-				html += '<p class="duration text-left videoDuration"></p>';
-			html += '</div>';
-		html += '</div>';
+		html += 
+			'<div id="video-' + videoId + '" video="' + videoId + '" class="row p-2">\
+				<div class="col-3 py-2 px-0">\
+					<a href="https://www.youtube.com/watch?v=' + videoId + '">\
+		 				<img src="' + thumbnail + '" style="width:100%;height:auto">\
+					</a>\
+				</div>\
+				<div class="col-9">\
+					<a href="https://www.youtube.com/watch?v=' + videoId + '">\
+						<h4 class="text-left videoTitle">' + title + '</h4>\
+					</a>\
+					<p class="text-left my-0">\
+						<vidChan class="videoAuthor bullet"><a href="https://www.youtube.com/channel/' + channelId + '">\
+							<em>' + channel + '</em>\
+						</a></vidChan>\
+						<span class="viewCount videoViews bullet"> </span>\
+						<vidDate class="videoDate bullet">Publiée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</vidDate>\
+					</p>\
+					<p class="text-left videoDescr">' + description + '</p>\
+					<p class="duration text-left videoDuration"></p>\
+				</div>\
+			</div>';
 
 	});
 	

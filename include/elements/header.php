@@ -13,6 +13,8 @@
 		<button for="connexion" role="button" class="btn btn-info my-2 my-sm-0 btn-user">Connexion</button>
 	<?php else: ?>
 		<h5 class="d-inline mr-3" id="pseudo-display">Bonjour, <i><?= $_SESSION['pseudo']?></i></h5>
-		<button for="deconnexion" role="button" class="btn btn-outline-info my-2 my-sm-0">Se déconnecter</button>
+		<form action="" method="post">
+			<button  name="disconnect" type="submit" role="button" class="btn btn-outline-info my-2 my-sm-0">Se déconnecter</button>
+		</form>
 	<?php endif ?>
 </nav>

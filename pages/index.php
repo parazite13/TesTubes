@@ -13,7 +13,7 @@
 	
 	<div class="container-fluid">
 		<div class="row">
-			<nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar fixed-top" style="margin-top: 95px;">
+			<nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar fixed-top margin-top">
 				<ul id="search-items" class="nav nav-pills flex-column">
 					<li class="nav-item">
 						<a class="nav-link" search="big data" href="#">Big Data</a>
@@ -30,7 +30,7 @@
 				</ul>
 			</nav>
 
-			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" style="margin-top: 95px;">
+			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3 margin-top">
 
 				<ul id="tabbed-menu" class="nav nav-tabs">
 					<li class="nav-item">
@@ -51,13 +51,13 @@
 				</ul>
 	
 				<div class="header-results">
-					<h1 id="search-results-title" style="position: absolute;"></h1>
+					<h1 id="search-results-title"></h1>
 				</div>
 
 				<div id="details-content">
 
 					<nav class="my-2">
-						<ul class="pagination mx-auto d-none" style="width: fit-content">
+						<ul class="pagination mx-auto d-none">
 							<li class="page-item">
 								<a token="" class="page-link page-previous d-none" href="#" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
@@ -112,18 +112,21 @@
 
 							<label class="sr-only" for="radius">Km</label>
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-								<input type="number" max="1000" class="form-control" id="radius">
+								<input type="number" min="1" max="1000" class="form-control" id="radius" placeholder="Rayon">
 								<div class="input-group-addon">Km</div>
 							</div>
 
-							<button id="submit-map" type="submit" role="button" class="btn btn-primary">Rechercher</button>
+							<button id="submit-map" type="submit" role="button" class="btn btn-primary">
+								<i class="fa fa-spinner fa-spin d-none"></i>
+								Rechercher
+							</button>
 						</form> 
 
-						<div id="map" style="height: 70vh;"></div>
+						<div id="map"></div>
 					</section>
 
 					<nav>
-						<ul class="pagination mx-auto d-none" style="width: fit-content">
+						<ul class="pagination mx-auto d-none">
 							<li class="page-item">
 								<a token="" class="page-link page-previous d-none" href="#" aria-label="Previous">
 									<span aria-hidden="true">&laquo;</span>
@@ -131,7 +134,7 @@
 								</a>
 							</li>
 							<li class="page-item">
-								<a class="page-link current-page" href="#" style="cursor: default;">1</a>
+								<a class="page-link current-page" href="#">1</a>
 							</li>
 							<li>
 								<a token="" class="page-link page-next" href="#" aria-label="Next">

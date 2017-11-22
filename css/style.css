@@ -1,3 +1,36 @@
+.margin-top{
+	margin-top: 95px;
+}
+
+.navbar-brand{
+	width: 20%;
+}
+
+#search-term{
+	width: 66%;
+}
+
+#query{
+	width: 70%;
+}
+
+.pagination{
+	width: fit-content;
+}
+
+.current-page{
+	cursor: default;
+}
+
+#map{
+	height: 70vh;
+}
+
+#search-results-title{
+	position: absolute;
+}
+
+
 .videoViews:after{
 	content: ' vues';
 }

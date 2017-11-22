@@ -1,176 +1,3 @@
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>TesTubes</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKqVcvBxViYhySoAa0ArgkjN0X1bucHmw&callback=initMap"></script>
-    <style type="text/css">
-		.videoViews:after{
-			content: ' vues';
-		}
-		.bullet:before{
-			content: ' \2022  ';
-		}
-
-	</style>
-</head>
-	
-<body>
-	<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse d-inline-block">
-
-		<a class="navbar-brand" href="#" style="width: 20%;">TesTubes</a>
-
-		<form id="search-term" class="d-inline-block form-inline mt-2 mt-md-0" style="width: 70%;">
-			<input id="query" class="form-control mr-sm-2" type="text" placeholder="Rechercher" style="width: 70%;">
-			<button role="button" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		</form>
-	</nav>
-
-	<div class="container-fluid">
-		<div class="row">
-			<nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar fixed-top" style="margin-top: 95px;">
-				<ul id="search-items" class="nav nav-pills flex-column">
-					<li class="nav-item">
-						<a class="nav-link" search="big data" href="#">Big Data</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" search="3D" href="#">3D</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" search="analyse d'image" href="#">Analyse d'image</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" search="musique" href="#">Musique</a>
-					</li>
-				</ul>
-			</nav>
-
-			<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" style="margin-top: 95px;">
-
-				<ul id="tabbed-menu" class="nav nav-tabs">
-					<li class="nav-item">
-						<a href="#" data-content="search-results-videos" class="nav-link active">
-							Vidéos
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="#" data-content="search-results-authors" class="nav-link">
-							Auteurs
-						</a>
-					</li>
-					<li class="nav-item">
-						<a href="#" data-content="search-results-map" class="nav-link">
-							Carte
-						</a>
-					</li>
-				</ul>
-	
-				<div class="header-results">
-					<h1 id="search-results-title" style="position: absolute;"></h1>
-				</div>
-
-				<div id="details-content">
-
-					<nav class="my-2">
-						<ul class="pagination mx-auto d-none" style="width: fit-content">
-							<li class="page-item">
-								<a token="" class="page-link page-previous d-none" href="#" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-									<span class="sr-only">Previous</span>
-								</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link current-page" href="#">1</a>
-							</li>
-							<li>
-								<a token="" class="page-link page-next" href="#" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-									<span class="sr-only">Next</span>
-								</a>
-							</li>
-						</ul>
-					</nav>
-
-					<section id="search-results-videos" class="mx-0 px-0 container text-center placeholders">
-						<div class="form-group row ml-1">
-							<div class="form-check">
-        						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoTitle"> Titre
-          						</label>
-          						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoAuthor"> Auteur
-          						</label>
-          						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoViews"> Vues
-          						</label>
-          						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoDate"> Date
-          						</label>
-          						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoDescr"> Description
-          						</label>
-          						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoDuration"> Durée
-          						</label>
-        					</div>
-     					</div>
-     					<div id="search-results-videos-div"></div>
-					</section>
-
-					<section id="search-results-authors" class="mx-0 px-0 container text-center placeholders d-none"></section>
-
-					<section id="search-results-map" class="mx-0 px-0 container text-center placeholders d-none">
-
-						<form id="form-map" class="form-inline my-1" onSubmit="return false;">
-							<label class="sr-only" for="center-location">Zone de recherche</label>
-							<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="center-location" placeholder="Ex: Marseille">
-
-							<label class="sr-only" for="radius">Km</label>
-							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
-								<input type="number" max="1000" class="form-control" id="radius">
-								<div class="input-group-addon">Km</div>
-							</div>
-
-							<button id="submit-map" type="submit" role="button" class="btn btn-primary">Rechercher</button>
-						</form> 
-
-						<div id="map" style="height: 70vh;"></div>
-					</section>
-
-					<nav>
-						<ul class="pagination mx-auto d-none" style="width: fit-content">
-							<li class="page-item">
-								<a token="" class="page-link page-previous d-none" href="#" aria-label="Previous">
-									<span aria-hidden="true">&laquo;</span>
-									<span class="sr-only">Previous</span>
-								</a>
-							</li>
-							<li class="page-item">
-								<a class="page-link current-page" href="#" style="cursor: default;">1</a>
-							</li>
-							<li>
-								<a token="" class="page-link page-next" href="#" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
-									<span class="sr-only">Next</span>
-								</a>
-							</li>
-						</ul>
-					</nav>
-				</div>
-			</main>
-		</div>
-	</div>
-</body>
-<script type="text/javascript">
-
 var searchTerm;
 var map;
 var markerCoord;
@@ -291,10 +118,8 @@ function displayMap(coords, radius){
 	    		$.getJSON(url, params, function (result) {
 					var markerCoord = {lat: result.items[0].recordingDetails.location.latitude, lng: result.items[0].recordingDetails.location.longitude};
 
-					console.log(result);
-
 					var infoWindow = new google.maps.InfoWindow({
-        				content: '<a href="https://www.youtube.com/watch?v=' + result.items[0].id + '">'+result.items[0].snippet.title+'</a>'
+        				content: '<a target="_blank" href="https://www.youtube.com/watch?v=' + result.items[0].id + '">'+result.items[0].snippet.title+'</a>'
         			});
 
 					var marker = new google.maps.Marker({
@@ -357,9 +182,8 @@ function getAuthors(searchTerm, pageToken = undefined) {
 }
 
 function displayAuthors(results){
+	
 	//var nbResults = results.pageInfo.totalResults;
-
-	console.log(results);
 
 	var html = "";
 	var entries = results.items;
@@ -515,6 +339,3 @@ function formatInt(nStr){
 	
 	return x1 + x2;
 }
-
-</script>
-</html>

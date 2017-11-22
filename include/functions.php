@@ -24,7 +24,7 @@ function getHead(){
 ///////////////////////////
 
 // Renvoie true si on est admin
-function isAdmin(){
+function isConnected(){
 	return $_SESSION['connect'];
 }
 

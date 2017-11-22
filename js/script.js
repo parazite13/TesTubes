@@ -186,7 +186,7 @@ function checkConnexion(){
 	var pseudo = $('#username-con').val();
 	var pwd = $('#pwd-con').val();
 
-	return pseudo.length > 4 && pwd.length > 6 && rgx.test(pseudo) && rgx.test(pwd);
+	return pseudo.length > 3 && pwd.length > 6 && rgx.test(pseudo) && rgx.test(pwd);
 }
 
 function checkInscription(){

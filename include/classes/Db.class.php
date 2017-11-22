@@ -33,7 +33,7 @@ class Db{
 	function getRowsFromQuery($query, $keep_numeric = true){
 		$rows = array();
 
-		$res = $this->bd->query($query); 
+		$res = $this->bd->query($query);
         while($var = $res->fetch()){
         	$rows[] = $var;
         }

@@ -14,11 +14,12 @@
 
 
 	//la personne essaie de se connecter
-	if(isset($_POST['pwd'])){
+	if(isset($_POST['pwd-con'])){
 
-		$user = $db->getRowFromQuery('SELECT * FROM `users` WHERE `pseudo`=' . $_POST['pseudo']);
-		if(md5($_POST['pwd']) == $user['password']){
+		$user = $db->getRowFromQuery('SELECT * FROM `users` WHERE `pseudo`=\'' . $_POST['username-con'] . '\'');
+		if(md5($_POST['pwd-con']) == $user['password']){
 			$_SESSION['connect'] = true;
+			$_SESSION['pseudo'] = $user['pseudo'];
 			if(isset($_POST['request_url'])){
 				header('Location: ' . $_POST['request_url']);
 				exit;

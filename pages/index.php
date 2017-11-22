@@ -10,6 +10,8 @@
 	
 	<?php getHeader(); ?>
 
+	<?php if(isAdmin()) echo "CA MARCHE !" ?>
+
 	
 	<div class="container-fluid">
 		<div class="row">

@@ -3,12 +3,19 @@
 
 <head>
 	<?php getHead(); ?>
-	<title></title>
+	<title>TesTubes - Accueil</title>
 </head>
 
 <body>
 	
-	<?php getHeader(); ?>
+	<?php 
+		getHeader(); 
+		if(isset($_SESSION['alertPwd'])){
+			echoAlert('danger', 'Nom d\'utilisateur ou mot de passe incorrect(s)');
+			unset($_SESSION['alertPwd']);
+		}
+
+	?>
 
 	<div class="overlay"></div>
 	<div class="d-none" id="blur" onclick="$('.overlay').addClass('d-none'); $(this).addClass('d-none');" style="position:fixed; z-index:1100; height:100vh; width:100vw; background-color:rgba(0, 0, 0, 0.5)"></div>

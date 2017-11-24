@@ -102,8 +102,8 @@ function getCurrentUrl($baseUrl = ''){
 function echoAlert($type, $msg){
     echo 	'<script type="text/javascript">
             	$(document).ready(function(){
-                	var html = \'<div style="position:absolute;top:0px; left: 15px; right: 15px; width:calc(100% - 30px);" class="alert alert-'. $type .' mt-2" role="alert">\
-                    	            '. $msg .'\
+                	var html = \'<div style="position:absolute;z-index:1150;top:10vh; left: 40vw; right: 40vw; width:20vw;" class="alert alert-'. $type .' mt-2 text-center" role="alert">\
+                    	            '. addslashes($msg) .'\
                         	    </div>\'
                   	$("body").append(html);
                   	setTimeout(function(){

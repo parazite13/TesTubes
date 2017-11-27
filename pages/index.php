@@ -9,12 +9,26 @@
 <body>
 	
 	<?php 
-		getHeader(); 
+		getHeader();
 		if(isset($_SESSION['alertPwd'])){
 			echoAlert('danger', 'Nom d\'utilisateur ou mot de passe incorrect(s)');
 			unset($_SESSION['alertPwd']);
 		}
-
+		//visiteur -> toutes les préférences à 1
+		if(!isset($_SESSION['pseudo'])){
+			$myPref = array('titre' => 1,
+							'auteur' => 1,
+							'vues' => 1,
+							'date' => 1,
+							'description' => 1,
+							'duree' => 1
+						);
+		}
+		//utilisateur connecté -> va chercher ses préférences dans la bdd
+		else{
+			$query = "SELECT * FROM `preferences` WHERE `pseudo` = '" . $_SESSION['pseudo'] . "';";
+			$myPref = $db->getRowFromQuery($query);
+		}
 	?>
 
 	<div class="overlay"></div>
@@ -88,22 +102,22 @@
 						<div class="form-group row ml-1">
 							<div class="form-check">
         						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoTitle"> Titre
+            						<input class="form-check-input" type="checkbox" <?php $myPref["titre"] ? print "checked": print ""?> filter="videoTitle"> Titre
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoAuthor"> Auteur
+            						<input class="form-check-input" type="checkbox" <?php $myPref["auteur"] ? print "checked": print ""?> filter="videoAuthor"> Auteur
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoViews"> Vues
+            						<input class="form-check-input" type="checkbox" <?php $myPref["vues"] ? print "checked": print ""?> filter="videoViews"> Vues
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoDate"> Date
+            						<input class="form-check-input" type="checkbox" <?php $myPref["date"] ? print "checked": print ""?> filter="videoDate"> Date
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoDescr"> Description
+            						<input class="form-check-input" type="checkbox" <?php $myPref["description"] ? print "checked": print ""?> filter="videoDescr"> Description
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" checked filter="videoDuration"> Durée
+            						<input class="form-check-input" type="checkbox" <?php $myPref["duree"] ? print "checked": print ""?> filter="videoDuration"> Durée
           						</label>
         					</div>
      					</div>
@@ -158,9 +172,12 @@
 	</div>
 	
 
-	<?php getFooter(); ?>
-
-	<script type="text/javascript" src="<?= ABSURL ?>js/script.js"></script>
+	<?php 
+		echo '<script>';
+			include ABSPATH."js/script.js.php";
+		echo '</script>';
+		getFooter(); 
+	?>
 
 </body>
 

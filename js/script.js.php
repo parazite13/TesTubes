@@ -350,17 +350,17 @@ function displayResults(results) {
 				</div>\
 				<div class="col-9">\
 					<a href="https://www.youtube.com/watch?v=' + videoId + '">\
-						<h4 class="text-left videoTitle">' + title + '</h4>\
+						<h4 class="text-left videoTitle <?php !$myPref["titre"] ? print "d-none": print ""?>">' + title + '</h4>\
 					</a>\
 					<p class="text-left my-0">\
-						<vidChan class="videoAuthor bullet"><a href="https://www.youtube.com/channel/' + channelId + '">\
+						<vidChan class="videoAuthor bullet <?php !$myPref["auteur"] ? print "d-none": print ""?>"><a href="https://www.youtube.com/channel/' + channelId + '">\
 							<em>' + channel + '</em>\
 						</a></vidChan>\
-						<span class="viewCount videoViews bullet"> </span>\
-						<vidDate class="videoDate bullet">Publiée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</vidDate>\
+						<span class="viewCount videoViews bullet <?php !$myPref["vues"] ? print "d-none": print ""?>"> </span>\
+						<vidDate class="videoDate bullet <?php !$myPref["date"] ? print "d-none": print ""?>">Publiée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</vidDate>\
 					</p>\
-					<p class="text-left videoDescr">' + description + '</p>\
-					<p class="duration text-left videoDuration"></p>\
+					<p class="text-left videoDescr <?php !$myPref["description"] ? print "d-none": print ""?>">' + description + '</p>\
+					<p class="duration text-left videoDuration <?php !$myPref["duree"] ? print "d-none": print ""?>"></p>\
 				</div>\
 			</div>';
 

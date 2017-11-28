@@ -5,7 +5,8 @@ class MongoDb{
 	private $bd;
 	private $nomBd;
 
-	private $quizz;
+	private $quiz;
+	private $questions;
 
 	function __construct($nom){
 
@@ -13,11 +14,17 @@ class MongoDb{
 
 		$client = new MongoDB\CLient();
 		$this->bd = $client->selectDatabase('testubes');
-		$this->quizz = $this->bd->selectCollection('quizz');
+
+		$this->quiz = $this->bd->selectCollection('quiz');
+		$this->questions = $this->bd->selectCollection('questions');
 	}
 
-	function getQuizz(){
-		return $this->quizz;
+	function getQuiz(){
+		return $this->quiz;
+	}
+
+	function getQuestions(){
+		return $this->questions;
 	}
 
 	

@@ -64,7 +64,7 @@
 						<?php 
 						$quiz = $mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray();
 						foreach ($quiz as $question) :?>
-							<div >
+							<div class="question">
 								<?=$question->enonce?>
 								<ul>
 									<?php foreach ($question->reponses as $key => $value):?>
@@ -98,25 +98,24 @@
 		});
 
 		function checkQuiz(){
-			//bloque les réponses de la question répondue
-			//var input = $(this);
-			//var question = input.prop('name');
-			//$('[name=' + question + ']').prop("disabled", true);
-			//colorie la bonne réponse
-			// ------ récupère la lettre de la bonne réponse ------ //
-			var url = 'ajax/checkQuiz';
-			$.get(url, $('#quiz-user form').serialize(), function(result){
-				var res = JSON.parse(result);
-				$.each(res, function(id, correctAnswer){
-					$('[value=' + correctAnswer + '][name=' + id + ']').parent().css('background-color', '#46E275');
-					//colorie la réponse choisie en rouge si elle est fausse
-					var inputChecked = $('[name=' + id + ']input:checked');
-					if(inputChecked.attr('value') != correctAnswer){
-						inputChecked.parent().css('background-color', '#E97878');	
-					}
-					$('#quiz-user input').prop("disabled", true);
+			//si l'utilisateur a répondu a toutes les questions
+			if($('#quiz-user input:checked').length == $('.question').length){
+				var url = 'ajax/checkQuiz';
+				$.get(url, $('#quiz-user form').serialize(), function(result){
+					var res = JSON.parse(result);
+					$.each(res, function(id, correctAnswer){
+						//colorie la bonne réponse
+						$('[value=' + correctAnswer + '][name=' + id + ']').parent().css('background-color', '#46E275');
+						var inputChecked = $('[name=' + id + ']input:checked');
+						//colorie la réponse choisie en rouge si elle est fausse
+						if(inputChecked.attr('value') != correctAnswer){
+							inputChecked.parent().css('background-color', '#E97878');	
+						}
+						//bloque les réponses
+						$('#quiz-user input').prop("disabled", true);
+					});
 				});
-			});
+			}
 			return false;
 		}
 	</script>

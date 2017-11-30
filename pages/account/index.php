@@ -26,28 +26,100 @@
 	?>
 	<div class="container margin-top">
 		<div class="control-group">
-			<form method="post" action="">
-				<?php
-				$query = "SELECT * FROM `preferences` WHERE `pseudo`='". $_SESSION['pseudo'] ."'";
-				$array = $db->getRowFromQuery($query, false);
-				foreach ($array as $key => $value):
-					if($key != 'id' && $key != 'pseudo'):
-				?>
-						<label class="control control-checkbox">
-							<?= ucfirst($key) ?>
-							<input type="checkbox" <?php echo 'name="'.$key.'"' ?> <?php $value ? print 'checked="unchecked"':print ''?> />
-							<div class="control_indicator"></div>
-						</label>
-				<?php 
-					endif;
-				endforeach;
-				?>
-				<button class="btn btn-success" name="changePref" role="button" type="submit">Enregistrer</button>
-			</form>
+			<ul id="tabbed-menu" class="nav nav-tabs">
+				<li class="nav-item">
+					<a href="#" data-content="preferences-user" class="nav-link active">
+						Préférences
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" data-content="quiz-user" class="nav-link">
+						Quiz
+					</a>
+				</li>
+			</ul>
+			<div id="details-content" class="mt-2">
+				<section id="preferences-user" class="mx-0 px-0 container placeholders">
+					<form method="post" action="">
+						<?php
+						$query = "SELECT * FROM `preferences` WHERE `pseudo`='". $_SESSION['pseudo'] ."'";
+						$array = $db->getRowFromQuery($query, false);
+						foreach ($array as $key => $value):
+							if($key != 'id' && $key != 'pseudo'):
+						?>
+								<label class="control control-checkbox">
+									<?= ucfirst($key) ?>
+									<input type="checkbox" <?php echo 'name="'.$key.'"' ?> <?php $value ? print 'checked="unchecked"':print ''?> />
+									<div class="control_indicator"></div>
+								</label>
+						<?php 
+							endif;
+						endforeach;
+						?>
+						<button class="btn btn-success" name="changePref" role="button" type="submit">Enregistrer</button>
+					</form>
+				</section>
+				<section id="quiz-user" class="mx-0 px-0 container placeholders d-none">
+					<form action="" method="post" onsubmit="return checkQuiz()">
+						<?php 
+						$quiz = $mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray();
+						foreach ($quiz as $question) :?>
+							<div >
+								<?=$question->enonce?>
+								<ul>
+									<?php foreach ($question->reponses as $key => $value):?>
+										<label class="control control-checkbox" style="width:fit-content">
+											<?=$value?>
+											<input type="radio" name="<?=$question->id?>" value="<?=$key?>" />
+											<div class="control_indicator"></div>
+										</label>
+									<?php endforeach?>
+								</ul>
+								<hr>
+							</div>
+						<?php endforeach?>
+						<button class="btn btn-success" role="button" type="submit">Envoyer</button>
+					</form>
+				</section>
+			</div>
 		</div>
 	</div>
 	<?php getFooter(); ?>
 
+	<script type="text/javascript">
+		$(document).ready(function(){
+			// Menu onglet
+			$('#tabbed-menu a').click(function(){
+				$('#tabbed-menu a').removeClass('active');
+				$(this).addClass('active');
+				$('#details-content > section').addClass('d-none');
+				$('#' + $(this).attr('data-content')).removeClass('d-none');
+			});
+		});
+
+		function checkQuiz(){
+			//bloque les réponses de la question répondue
+			//var input = $(this);
+			//var question = input.prop('name');
+			//$('[name=' + question + ']').prop("disabled", true);
+			//colorie la bonne réponse
+			// ------ récupère la lettre de la bonne réponse ------ //
+			var url = 'ajax/checkQuiz';
+			$.get(url, $('#quiz-user form').serialize(), function(result){
+				var res = JSON.parse(result);
+				$.each(res, function(id, correctAnswer){
+					$('[value=' + correctAnswer + '][name=' + id + ']').parent().css('background-color', '#46E275');
+					//colorie la réponse choisie en rouge si elle est fausse
+					var inputChecked = $('[name=' + id + ']input:checked');
+					if(inputChecked.attr('value') != correctAnswer){
+						inputChecked.parent().css('background-color', '#E97878');	
+					}
+					$('#quiz-user input').prop("disabled", true);
+				});
+			});
+			return false;
+		}
+	</script>
 </body>
 
 </html>

@@ -23,5 +23,7 @@ require(ABSPATH . 'include/session.php');
 require(ABSPATH . 'include/functions.php');
 
 // Charge la page demandé par l'utilisateur
-require(ABSPATH . 'include/dispatcher.php');
+if(!isset($ajax)){
+	require(ABSPATH . 'include/dispatcher.php');
+}
 ?>

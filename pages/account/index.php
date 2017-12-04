@@ -61,8 +61,10 @@
 				</section>
 				<section id="quiz-user" class="mx-0 px-0 container placeholders d-none">
 					<form action="" method="post" onsubmit="return checkQuiz()">
-						<?php 
-						$quiz = $mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray();
+						<?php
+						$idQuiz = 1;
+						$quiz = $mongoDb->getQuiz()->find(array("id" => 1))->toArray()[0];
+						$quiz = $mongoDb->getQuestions()->find(array('id'=>array('$in'=>$quiz->questions)))->toArray();
 						foreach ($quiz as $question) :?>
 							<div class="question">
 								<?=$question->enonce?>

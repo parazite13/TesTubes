@@ -3,11 +3,20 @@
 }
 
 .navbar-brand{
-	width: 20%;
+
 }
 
 #search-term{
-	width: 60%;
+    margin: auto;
+	width: 50%;
+}
+
+#connection-items{
+    float: right;
+}
+
+#connection-items > * {
+    float: right;
 }
 
 #query{

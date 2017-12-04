@@ -28,7 +28,7 @@
 		<div class="control-group">
 			<ul id="tabbed-menu" class="nav nav-tabs">
 				<li class="nav-item">
-					<a href="#" data-content="preferences-user" class="nav-link active">
+					<a href="#" data-content="preferences-user" class="nav-link">
 						Préférences
 					</a>
 				</li>
@@ -39,7 +39,7 @@
 				</li>
 			</ul>
 			<div id="details-content" class="mt-2">
-				<section id="preferences-user" class="mx-0 px-0 container placeholders">
+				<section id="preferences-user" class="mx-0 px-0 container placeholders d-none">
 					<form method="post" action="">
 						<?php
 						$query = "SELECT * FROM `preferences` WHERE `id_user`='". $_SESSION['id'] ."'";
@@ -101,6 +101,8 @@
 		function checkQuiz(){
 			//si l'utilisateur a répondu a toutes les questions
 			if($('#quiz-user input:checked').length == $('.question').length){
+				var answers = new Object();
+				//demande au serveur les bonnes réponses pour colorier et stock les réponses user
 				var url = 'ajax/checkQuiz';
 				$.get(url, $('#quiz-user form').serialize(), function(result){
 					var res = JSON.parse(result);
@@ -111,6 +113,9 @@
 						//colorie la réponse choisie en rouge si elle est fausse
 						if(inputChecked.attr('value') != correctAnswer){
 							inputChecked.parent().css('background-color', '#E97878');	
+							answers[idQuestion] = false;
+						}else{
+							answers[idQuestion] = true;
 						}
 						//bloque les réponses
 						$('#quiz-user input').prop("disabled", true);

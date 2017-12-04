@@ -138,8 +138,7 @@ $mongoDb->getProblems()->insertOne($insert);
 //$results = $mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray();
 
 
-
-
+//------- PRINTS ------- //
 $results = $mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();
 print_r($results);
 echo '<br>';
@@ -154,7 +153,10 @@ die();
 //------- EXEMPLES ------- //
 //$mongoDb->getQuiz()->insertOne($insert);
 //$mongoDb->getQuiz()->deleteOne(array('id' => 1));
-
+// echo '<pre>';
+// $results = $mongoDb->getScores()->find(array(), array("summary" => true))->toArray();
+// print_r($results);
+// die();
 
 // Initialise les variables de session
 require(ABSPATH . 'include/session.php');

@@ -62,7 +62,7 @@
 					<div class="method p-2">
 						<span class="return-type"><?= $method->getReturnType() ?></span>
 						
-						<span class="method-name"><?= $method->getName() ?></span> (
+						<a href="<?=ABSURL?>api/<?= $method->getName() ?>" class="method-name"><?= $method->getName() ?></a> (
 
 						<?php $params = $method->getParameters(); ?>
 						<?php foreach($params as $index => $param): ?>

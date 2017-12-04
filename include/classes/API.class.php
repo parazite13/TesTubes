@@ -16,10 +16,17 @@ class API{
 	/**
 	 * Retourne un tableau contenant les informations de l'utilisateur courant
 	 */
-	function getUserInfo() : array{
+	function getUserInfos() : array{
 		$this->checkUserId();
 
 		return $this->db->getRowFromQuery("SELECT * FROM `users` WHERE `id`=".$this->userId, false);	
+	}
+
+	/**
+	 * Une méthode qui déchire !
+	 */
+	function laMethodeDeLaMortPourTester(string $toto, int $tata = 4, $titi = "youhou") : void{
+
 	}
 
 	private function checkUserId(){

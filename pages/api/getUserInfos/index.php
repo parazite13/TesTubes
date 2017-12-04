@@ -1,5 +1,5 @@
 <?php
 
-echo json_encode($api->getUserInfo());
+echo json_encode($api->getUserInfos());
 
 ?>

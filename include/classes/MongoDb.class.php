@@ -19,6 +19,7 @@ class MongoDb{
 		$this->categories = $this->bd->selectCollection('categories');
 		$this->questions = $this->bd->selectCollection('questions');
 		$this->problems = $this->bd->selectCollection('problems');
+		$this->scores = $this->bd->selectCollection('scores');
 	}
 
 	function getCategories(){
@@ -33,7 +34,9 @@ class MongoDb{
 		return $this->problems;
 	}
 
-	
+	function getScores(){
+		return $this->scores;
+	}
 }
 
 ?>

@@ -5,8 +5,9 @@ class MongoDb{
 	private $bd;
 	private $nomBd;
 
-	private $quiz;
+	private $categories;
 	private $questions;
+	private $problems;
 
 	function __construct($nom){
 
@@ -15,16 +16,22 @@ class MongoDb{
 		$client = new MongoDB\CLient();
 		$this->bd = $client->selectDatabase('testubes');
 
-		$this->quiz = $this->bd->selectCollection('quiz');
+		$this->categories = $this->bd->selectCollection('categories');
 		$this->questions = $this->bd->selectCollection('questions');
+		$this->problems = $this->bd->selectCollection('problems');
+		
 	}
 
-	function getQuiz(){
-		return $this->quiz;
+	function getCategories(){
+		return $this->categories;
 	}
 
 	function getQuestions(){
 		return $this->questions;
+	}
+
+	function getProblems(){
+		return $this->problems;
 	}
 
 	

@@ -63,7 +63,7 @@
 					<form action="" method="post" onsubmit="return checkQuiz()">
 						<?php
 						$idQuiz = 1;
-						$quiz = $mongoDb->getQuiz()->find(array("id" => 1))->toArray()[0];
+						$quiz = $mongoDb->getQuiz()->find(array("id" => $idQuiz))->toArray()[0];
 						$quiz = $mongoDb->getQuestions()->find(array('id'=>array('$in'=>$quiz->questions)))->toArray();
 						foreach ($quiz as $question) :?>
 							<div class="question">

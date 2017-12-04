@@ -26,7 +26,7 @@
 		}
 		//utilisateur connecté -> va chercher ses préférences dans la bdd
 		else{
-			$query = "SELECT * FROM `preferences` WHERE `pseudo` = '" . $_SESSION['pseudo'] . "';";
+			$query = "SELECT * FROM `preferences` WHERE `id_user` = '" . $_SESSION['id'] . "';";
 			$myPref = $db->getRowFromQuery($query);
 		}
 	?>

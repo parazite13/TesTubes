@@ -157,6 +157,10 @@ class Db{
 	function executeQuery($query){
 		$this->bd->exec($query);
 	}
+
+	function getLastInsertId(){
+		return $this->bd->lastInsertId();
+	}
 }
 
 ?>

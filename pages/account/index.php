@@ -8,7 +8,7 @@
 
 <body>
 	
-	<?php 
+	<?php
 		getHeader(); 
 
 		//l'utilisateur a cliqué sur le bouton "enregistrer"
@@ -20,7 +20,7 @@
 						`date` = ". (isset($_POST['date']) ? '1' : '0') ." ,
 						`description` = ". (isset($_POST['description']) ? '1' : '0') ." ,
 						`duree` = ". (isset($_POST['duree']) ? '1' : '0') ." 
-						WHERE `pseudo` = '" . $_SESSION['pseudo']."'";
+						WHERE `id_user` = '" . $_SESSION['id']."'";
 			$db->executeQuery($query);
 		}
 	?>
@@ -42,10 +42,10 @@
 				<section id="preferences-user" class="mx-0 px-0 container placeholders">
 					<form method="post" action="">
 						<?php
-						$query = "SELECT * FROM `preferences` WHERE `pseudo`='". $_SESSION['pseudo'] ."'";
+						$query = "SELECT * FROM `preferences` WHERE `id_user`='". $_SESSION['id'] ."'";
 						$array = $db->getRowFromQuery($query, false);
 						foreach ($array as $key => $value):
-							if($key != 'id' && $key != 'pseudo'):
+							if($key != 'id' && $key != 'id_user'):
 						?>
 								<label class="control control-checkbox">
 									<?= ucfirst($key) ?>
@@ -62,10 +62,9 @@
 				<section id="quiz-user" class="mx-0 px-0 container placeholders d-none">
 					<form action="" method="post" onsubmit="return checkQuiz()">
 						<?php
-						$idQuiz = 1;
-						$quiz = $mongoDb->getQuiz()->find(array("id" => $idQuiz))->toArray()[0];
-						$quiz = $mongoDb->getQuestions()->find(array('id'=>array('$in'=>$quiz->questions)))->toArray();
-						foreach ($quiz as $question) :?>
+						$idProblem = 1;
+						$questions = $mongoDb->getQuestions()->find(array('problem'=>$idProblem))->toArray();
+						foreach ($questions as $question) :?>
 							<div class="question">
 								<?=$question->enonce?>
 								<ul>
@@ -80,7 +79,7 @@
 								<hr>
 							</div>
 						<?php endforeach?>
-						<button class="btn btn-success" role="button" type="submit">Envoyer</button>
+						<button class="btn btn-success" role="button" type="submit">Valider</button>
 					</form>
 				</section>
 			</div>
@@ -105,10 +104,10 @@
 				var url = 'ajax/checkQuiz';
 				$.get(url, $('#quiz-user form').serialize(), function(result){
 					var res = JSON.parse(result);
-					$.each(res, function(id, correctAnswer){
+					$.each(res, function(idQuestion, correctAnswer){
 						//colorie la bonne réponse
-						$('[value=' + correctAnswer + '][name=' + id + ']').parent().css('background-color', '#46E275');
-						var inputChecked = $('[name=' + id + ']input:checked');
+						$('[value=' + correctAnswer + '][name=' + idQuestion + ']').parent().css('background-color', '#46E275');
+						var inputChecked = $('[name=' + idQuestion + ']input:checked');
 						//colorie la réponse choisie en rouge si elle est fausse
 						if(inputChecked.attr('value') != correctAnswer){
 							inputChecked.parent().css('background-color', '#E97878');	

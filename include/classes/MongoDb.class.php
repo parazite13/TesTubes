@@ -19,7 +19,6 @@ class MongoDb{
 		$this->categories = $this->bd->selectCollection('categories');
 		$this->questions = $this->bd->selectCollection('questions');
 		$this->problems = $this->bd->selectCollection('problems');
-		
 	}
 
 	function getCategories(){

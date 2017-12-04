@@ -1,7 +1,7 @@
 <?php
 	session_start();
 
-	//la personne (admin) se déconnecte
+	//l'utilisateur se déconnecte
 	if(isset($_POST['disconnect'])){
 		session_destroy();
 
@@ -20,7 +20,7 @@
 					);
 		$db->insertInto('users', $array);
 		//inclut des pref par défaut dans les prefs
-		$arrayPref = array( 'pseudo' => $_POST['username-inscr'], 
+		$arrayPref = array( 'id_user' => $db->getLastInsertId(), 
 							'titre' => 1,
 							'auteur' => 1,
 							'vues' => 1,
@@ -42,6 +42,7 @@
 		if(md5($_POST['pwd-con']) == $user['password']){
 			$_SESSION['connect'] = true;
 			$_SESSION['pseudo'] = $user['pseudo'];
+			$_SESSION['id'] = $user['id'];
 			if(isset($_POST['request_url'])){
 				header('Location: ' . $_POST['request_url']);
 				exit;

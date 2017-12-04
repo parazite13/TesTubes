@@ -161,6 +161,10 @@ die();
 // Initialise les variables de session
 require(ABSPATH . 'include/session.php');
 
+// Initialise l'API
+$id = isset($_SESSION['id']) ? $_SESSION['id'] : null;
+$api = new Api($id);
+
 // Charge les fonctions utiles
 require(ABSPATH . 'include/functions.php');
 

@@ -14,4 +14,5 @@ define('DB_HOST', 'localhost');
 
 // Nom de la base de données
 define('DB_NAME', 'testubes');
+
 ?>

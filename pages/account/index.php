@@ -139,7 +139,6 @@
 		function checkQuiz(){
 			//si l'utilisateur a répondu a toutes les questions
 			if($(this).parent().find('input:checked').length == $(this).parent().find('.question').length){
-				var answers = new Object();
 				//demande au serveur les bonnes réponses pour colorier et stock les réponses user
 				var url = 'ajax/checkQuiz';
 				$.get(url, $('#quiz-user form').serialize(), function(result){
@@ -150,13 +149,11 @@
 						var inputChecked = $('[name=' + idQuestion + ']input:checked');
 						//colorie la réponse choisie en rouge si elle est fausse
 						if(inputChecked.attr('value') != correctAnswer){
-							inputChecked.parent().css('background-color', '#E97878');	
-							answers[idQuestion] = false;
-						}else{
-							answers[idQuestion] = true;
+							inputChecked.parent().css('background-color', '#E97878');
 						}
 						//bloque les réponses
-						//$('#quiz-user input').prop("disabled", true);
+						//$(this).parent().find('input').prop("disabled", true);
+						//$(this).prop("disabled", true);
 					});
 				});
 			}

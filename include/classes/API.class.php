@@ -50,8 +50,8 @@ class API{
 		if($category == 0){
 			return $this->mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();
 		}else{
-			$problemsId = $this->mongoDb->getCategories()->find(array())->toArray()[0]->problems;
-			return $this->mongoDb->getProblems()->find(array('id'=>intval($problemsId)))->toArray();
+			$problemsId = $this->mongoDb->getCategories()->find(array(), array("summary" => true))->toArray()[0]->problems;
+			return $this->mongoDb->getProblems()->find(array('id'=>array('$in'=>$problemsId)))->toArray();
 		}
 	}
 

@@ -60,13 +60,13 @@
 				</section>
 				<section id="quiz-user" class="mx-0 px-0 container placeholders d-none">
 					<ul id="tabbed-menu-category" class="nav nav-tabs">
-					<?php $categories = $mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();?>
+					<?php $categories = $api->getCategories()?>
 					<?php foreach ($categories as $category) :?>
 						<li class="menu-item-category">
 							<a href="#" data-content="category<?=$category->id?>" class="nav-link">
 								<?=$category->nom?>
 							</a>
-							<?php $problems = $mongoDb->getProblems()->find(array('id'=>array('$in'=>$category->problems)))->toArray();?>
+							<?php $problems = $api->getProblems($category->id)?>
 							<ul id="category<?=$category->id?>" class="nav nav-tabs problems d-none">
 							<?php foreach ($problems as $problem) :?>
 								<li class="nav-item">
@@ -79,12 +79,12 @@
 						</li>
 					<?php endforeach ?>
 					</ul>
-					<?php $problems = $mongoDb->getProblems()->find(array(), array("summary" => true))->toArray();?>
+					<?php $problems = $api->getProblems()?>
 					<?php foreach ($problems as $problem) :?>
 						<form class="quiz d-none" id="problem<?=$problem->id?>" action="" method="post" onsubmit="return checkQuiz()">
 							<?php
 							$idProblem = $problem->id;
-							$questions = $mongoDb->getQuestions()->find(array('problem'=>$idProblem))->toArray();
+							$questions = $api->getQuestions(0, $problem->id);
 							foreach ($questions as $question) :?>
 								<div class="question">
 									<?=$question->enonce?>

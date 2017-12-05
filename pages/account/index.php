@@ -83,7 +83,6 @@
 					<?php foreach ($problems as $problem) :?>
 						<form class="quiz d-none" id="problem<?=$problem->id?>" action="" method="post" onsubmit="return checkQuiz()">
 							<?php
-							$idProblem = $problem->id;
 							$questions = $api->getQuestions(0, $problem->id);
 							foreach ($questions as $question) :?>
 								<div class="question">

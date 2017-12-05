@@ -65,7 +65,8 @@
 						<?php $params = $method->getParameters(); ?>
 						<?php 
 						$urlParam = count($params) > 0 ? "?" : "";
-						foreach($params as $param){
+						foreach($params as $index => $param){
+							if($index != 0) $urlParam.= "&";
 							$urlParam .= $param->getName() . "=" . $param->getDefaultValue();
 						}
 						?>

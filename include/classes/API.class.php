@@ -48,9 +48,9 @@ class API{
 	 */
 	function getProblems($category = 0) : array{
 		if($category == 0){
-			return $this->mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();
+			return $this->mongoDb->getProblems()->find(array(), array("summary" => true))->toArray();
 		}else{
-			$problemsId = $this->mongoDb->getCategories()->find(array(), array("summary" => true))->toArray()[0]->problems;
+			$problemsId = $this->mongoDb->getCategories()->find(array("id"=>intval($category)))->toArray()[0]->problems;
 			return $this->mongoDb->getProblems()->find(array('id'=>array('$in'=>$problemsId)))->toArray();
 		}
 	}
@@ -63,7 +63,6 @@ class API{
 	 * 0 indique que toute les questions de tous les problemes doivent être récupérées
 	 */
 	function getQuestions($category = 0, $problem = 0) : array{
-
 		if($category == 0 && $problem == 0){
 			return $this->mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray();
 		}else{
@@ -72,7 +71,7 @@ class API{
 					$problemsId = $this->mongoDb->getCategories()->find(array(), array("summary" => true))->toArray()[0]->problems;
 					return $this->mongoDb->getQuestions()->find(array('problem'=>array('$in'=>$problemsId)))->toArray();
 				}else{
-					return $this->mongoDb->getQuestions()->find(array('problem'=>array('$in'=>$problem)))->toArray();
+					return $this->mongoDb->getQuestions()->find(array('problem'=>array('$in'=>intval($problem))))->toArray();
 				}
 			}else{
 				return $this->mongoDb->getQuestions()->find(array('problem'=>intval($problem)))->toArray();

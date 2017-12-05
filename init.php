@@ -174,13 +174,12 @@ $insert =
 	);
 $mongoDb->getQuestions()->insertOne($insert);
 
-
 //------- INSERT CATEGORIES ------- //
 $insert = 
 	array(
 		'id' => 1,
 		'nom' => "Big Data",
-		'problems' => array(1, 2, 3, 4)
+		'problems' => array(1, 2)
 	);
 $mongoDb->getCategories()->insertOne($insert);
 
@@ -188,7 +187,7 @@ $insert =
 	array(
 		'id' => 2,
 		'nom' => "3D",
-		'problems' => array(1, 2, 3, 4)
+		'problems' => array(3, 4)
 	);
 $mongoDb->getCategories()->insertOne($insert);
 
@@ -196,10 +195,9 @@ $insert =
 	array(
 		'id' => 3,
 		'nom' => "Analyse d'images",
-		'problems' => array(1, 2, 3, 4)
+		'problems' => array(1, 4)
 	);
 $mongoDb->getCategories()->insertOne($insert);
-
 
 //------- INSERT PROBLEMES ------- //
 $insert = 
@@ -259,6 +257,10 @@ die();
 // $mongoDb->getQuestions()->updateOne(array('id'=>5), array('$set'=>array('problem'=>4)));
 // $results = $mongoDb->getScores()->find(array(), array("summary" => true))->toArray();
 // print_r($results);
+// die();
+
+// echo '<pre>';
+// print_r($mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray());
 // die();
 
 // Initialise les variables de session

@@ -139,7 +139,7 @@
 
 		function checkQuiz(){
 			//si l'utilisateur a répondu a toutes les questions
-			if($('#quiz-user input:checked').length == $('.question').length){
+			if($(this).parent().find('input:checked').length == $(this).parent().find('.question').length){
 				var answers = new Object();
 				//demande au serveur les bonnes réponses pour colorier et stock les réponses user
 				var url = 'ajax/checkQuiz';
@@ -157,7 +157,7 @@
 							answers[idQuestion] = true;
 						}
 						//bloque les réponses
-						$('#quiz-user input').prop("disabled", true);
+						//$('#quiz-user input').prop("disabled", true);
 					});
 				});
 			}

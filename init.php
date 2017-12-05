@@ -94,6 +94,87 @@ $insert =
 	);
 $mongoDb->getQuestions()->insertOne($insert);
 
+$insert = 
+	array(
+		'id' => 6,
+		'enonce' => "Which of the following are NOT true for Hadoop?",
+		'reponses' => array(
+			'A' => "It’s a tool for Big Data analysis",
+			'B' => "It supports structured and unstructured data analysis",
+			'C' => "It aims for vertical scaling out/in scenarios",
+			'D' => "Both (a) and (c)"
+		),
+		'correct' => 'D',
+		'problem' => 2,
+		'difficulty' => 3
+	);
+$mongoDb->getQuestions()->insertOne($insert);
+
+$insert = 
+	array(
+		'id' => 7,
+		'enonce' => "Which of the following are the core components of Hadoop?",
+		'reponses' => array(
+			'A' => "HDFS",
+			'B' => "Map Reduce",
+			'C' => "HBase",
+			'D' => "Both (a) and (b)"
+		),
+		'correct' => 'D',
+		'problem' => 2,
+		'difficulty' => 4
+	);
+$mongoDb->getQuestions()->insertOne($insert);
+
+$insert = 
+	array(
+		'id' => 8,
+		'enonce' => "Hadoop is open source.",
+		'reponses' => array(
+			'A' => "ALWAYS True",
+			'B' => "True only for Apache Hadoop",
+			'C' => "True only for Apache and Cloudera Hadoop",
+			'D' => "ALWAYS False"
+		),
+		'correct' => 'B',
+		'problem' => 2,
+		'difficulty' => 1
+	);
+$mongoDb->getQuestions()->insertOne($insert);
+
+$insert = 
+	array(
+		'id' => 9,
+		'enonce' => "Hive can be used for real time queries.",
+		'reponses' => array(
+			'A' => "TRUE",
+			'B' => "FALSE",
+			'C' => "True if data set is small",
+			'D' => "True for some distributions"
+		),
+		'correct' => 'B',
+		'problem' => 4,
+		'difficulty' => 2
+	);
+$mongoDb->getQuestions()->insertOne($insert);
+
+$insert = 
+	array(
+		'id' => 10,
+		'enonce' => "Distcp command ALWAYS needs fully qualified hdfs paths.",
+		'reponses' => array(
+			'A' => "True",
+			'B' => "False",
+			'C' => "True, if source and destination are in same cluster",
+			'D' => "False, if source and destination are in same cluster"
+		),
+		'correct' => 'A',
+		'problem' => 2,
+		'difficulty' => 4
+	);
+$mongoDb->getQuestions()->insertOne($insert);
+
+
 //------- INSERT CATEGORIES ------- //
 $insert = 
 	array(
@@ -176,7 +257,7 @@ die();
 // $mongoDb->getQuestions()->updateOne(array('id'=>3), array('$set'=>array('problem'=>2)));
 // $mongoDb->getQuestions()->updateOne(array('id'=>4), array('$set'=>array('problem'=>3)));
 // $mongoDb->getQuestions()->updateOne(array('id'=>5), array('$set'=>array('problem'=>4)));
-// $results = $mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();
+// $results = $mongoDb->getScores()->find(array(), array("summary" => true))->toArray();
 // print_r($results);
 // die();
 

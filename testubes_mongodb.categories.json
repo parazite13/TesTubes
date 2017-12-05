@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5a26739c7e1ad01bc80006af"},"id":1,"nom":"Big Data","problems":[1,2]}
+{"_id":{"$oid":"5a26739c7e1ad01bc80006b0"},"id":2,"nom":"3D","problems":[3,4]}
+{"_id":{"$oid":"5a26739c7e1ad01bc80006b1"},"id":3,"nom":"Analyse d'images","problems":[1,4]}

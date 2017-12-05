@@ -37,18 +37,12 @@
 		<div class="row">
 			<nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar fixed-top margin-top">
 				<ul id="search-items" class="nav nav-pills flex-column">
-					<li class="nav-item">
-						<a class="nav-link" search="big data" href="#">Big Data</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" search="3D" href="#">3D</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" search="analyse d'image" href="#">Analyse d'image</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" search="musique" href="#">Musique</a>
-					</li>
+					<?php $categories = $mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();?> 
+					<?php foreach ($categories as $category) :?>
+							<li class="nav-item">
+								<a class="nav-link" search="<?=strtolower($category->nom)?>" href="#"><?=$category->nom?></a>
+							</li>
+					<?php endforeach ?>
 				</ul>
 			</nav>
 

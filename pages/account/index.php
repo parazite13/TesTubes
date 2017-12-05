@@ -26,7 +26,7 @@
 	?>
 	<div class="container margin-top">
 		<div class="control-group">
-			<ul id="tabbed-menu" class="nav nav-tabs">
+			<ul id="tabbed-menu-main" class="nav nav-tabs">
 				<li class="nav-item">
 					<a href="#" data-content="preferences-user" class="nav-link">
 						Préférences
@@ -60,27 +60,50 @@
 					</form>
 				</section>
 				<section id="quiz-user" class="mx-0 px-0 container placeholders d-none">
-					<form action="" method="post" onsubmit="return checkQuiz()">
-						<?php
-						$idProblem = 1;
-						$questions = $mongoDb->getQuestions()->find(array('problem'=>$idProblem))->toArray();
-						foreach ($questions as $question) :?>
-							<div class="question">
-								<?=$question->enonce?>
-								<ul>
-									<?php foreach ($question->reponses as $key => $value):?>
-										<label class="control control-checkbox" style="width:fit-content">
-											<?=$value?>
-											<input type="radio" name="<?=$question->id?>" value="<?=$key?>" />
-											<div class="control_indicator"></div>
-										</label>
-									<?php endforeach?>
-								</ul>
-								<hr>
-							</div>
-						<?php endforeach?>
-						<button class="btn btn-success" role="button" type="submit">Valider</button>
-					</form>
+					<ul id="tabbed-menu-category" class="nav nav-tabs">
+					<?php $categories = $mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();?>
+					<?php foreach ($categories as $category) :?>
+						<li class="menu-item-category">
+							<a href="#" data-content="category<?=$category->id?>" class="nav-link">
+								<?=$category->nom?>
+							</a>
+							<?php $problems = $mongoDb->getProblems()->find(array('id'=>array('$in'=>$category->problems)))->toArray();?>
+							<ul id="category<?=$category->id?>" class="nav nav-tabs problems d-none">
+							<?php foreach ($problems as $problem) :?>
+								<li class="nav-item">
+									<a href="#" data-content="problem<?=$problem->id?>" class="nav-link problem-item">
+										<?=$problem->nom?>
+									</a>
+								</li>
+							<?php endforeach ?>
+							</ul>
+						</li>
+					<?php endforeach ?>
+					</ul>
+					<?php $problems = $mongoDb->getProblems()->find(array(), array("summary" => true))->toArray();?>
+					<?php foreach ($problems as $problem) :?>
+						<form class="quiz d-none" id="problem<?=$problem->id?>" action="" method="post" onsubmit="return checkQuiz()">
+							<?php
+							$idProblem = $problem->id;
+							$questions = $mongoDb->getQuestions()->find(array('problem'=>$idProblem))->toArray();
+							foreach ($questions as $question) :?>
+								<div class="question">
+									<?=$question->enonce?>
+									<ul>
+										<?php foreach ($question->reponses as $key => $value):?>
+											<label class="control control-checkbox" style="width:fit-content">
+												<?=$value?>
+												<input type="radio" name="<?=$question->id?>" value="<?=$key?>" />
+												<div class="control_indicator"></div>
+											</label>
+										<?php endforeach?>
+									</ul>
+									<hr>
+								</div>
+							<?php endforeach?>
+							<button class="btn btn-success" role="button" type="submit">Valider</button>
+						</form>
+					<?php endforeach ?>
 				</section>
 			</div>
 		</div>
@@ -89,11 +112,28 @@
 
 	<script type="text/javascript">
 		$(document).ready(function(){
-			// Menu onglet
-			$('#tabbed-menu a').click(function(){
-				$('#tabbed-menu a').removeClass('active');
+			// Menu onglet principal
+			$('#tabbed-menu-main a').click(function(){
+				$('#tabbed-menu-main a').removeClass('active');
 				$(this).addClass('active');
 				$('#details-content > section').addClass('d-none');
+				$('#' + $(this).attr('data-content')).removeClass('d-none');
+			});
+
+			// Menu onglet catégories
+			$('.menu-item-category > a').click(function(){
+				$('.menu-item-category a').removeClass('active');
+				$(this).addClass('active');
+				$('.problems').addClass('d-none');
+				$('.quiz').addClass('d-none');
+				$('#' + $(this).attr('data-content')).removeClass('d-none');
+			});
+
+			// Menu onglet problemes
+			$('.problem-item').click(function(){
+				$('.problem-item').removeClass('active');
+				$(this).addClass('active');
+				$('.quiz').addClass('d-none');
 				$('#' + $(this).attr('data-content')).removeClass('d-none');
 			});
 		});

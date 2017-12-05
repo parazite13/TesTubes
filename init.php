@@ -103,6 +103,23 @@ $insert =
 	);
 $mongoDb->getCategories()->insertOne($insert);
 
+$insert = 
+	array(
+		'id' => 2,
+		'nom' => "3D",
+		'problems' => array(1, 2, 3, 4)
+	);
+$mongoDb->getCategories()->insertOne($insert);
+
+$insert = 
+	array(
+		'id' => 3,
+		'nom' => "Analyse d'images",
+		'problems' => array(1, 2, 3, 4)
+	);
+$mongoDb->getCategories()->insertOne($insert);
+
+
 //------- INSERT PROBLEMES ------- //
 $insert = 
 	array(
@@ -155,6 +172,11 @@ die();
 //$mongoDb->getQuiz()->deleteOne(array('id' => 1));
 // echo '<pre>';
 // $results = $mongoDb->getScores()->find(array(), array("summary" => true))->toArray();
+// print_r($results);
+// $mongoDb->getQuestions()->updateOne(array('id'=>3), array('$set'=>array('problem'=>2)));
+// $mongoDb->getQuestions()->updateOne(array('id'=>4), array('$set'=>array('problem'=>3)));
+// $mongoDb->getQuestions()->updateOne(array('id'=>5), array('$set'=>array('problem'=>4)));
+// $results = $mongoDb->getCategories()->find(array(), array("summary" => true))->toArray();
 // print_r($results);
 // die();
 

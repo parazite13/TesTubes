@@ -15,7 +15,7 @@
 			unset($_SESSION['alertPwd']);
 		}
 		//visiteur -> toutes les préférences à 1
-		if(!isset($_SESSION['pseudo'])){
+		if(!isConnected()){
 			$myPref = array('titre' => 1,
 							'auteur' => 1,
 							'vues' => 1,
@@ -26,8 +26,7 @@
 		}
 		//utilisateur connecté -> va chercher ses préférences dans la bdd
 		else{
-			$query = "SELECT * FROM `preferences` WHERE `id_user` = '" . $_SESSION['id'] . "';";
-			$myPref = $db->getRowFromQuery($query);
+			$myPref = $api->getPreferences();
 		}
 	?>
 

@@ -62,9 +62,15 @@
 					<div class="method p-2">
 						<span class="return-type"><?= $method->getReturnType() ?></span>
 						
-						<a href="<?=ABSURL?>api/<?= $method->getName() ?>" class="method-name"><?= $method->getName() ?></a> (
-
 						<?php $params = $method->getParameters(); ?>
+						<?php 
+						$urlParam = count($params) > 0 ? "?" : "";
+						foreach($params as $param){
+							$urlParam .= $param->getName() . "=" . $param->getDefaultValue();
+						}
+						?>
+						<a href="<?=ABSURL?>api/<?= $method->getName() . $urlParam ?>" class="method-name"><?= $method->getName() ?></a> (
+
 						<?php foreach($params as $index => $param): ?>
 							<?php if($param->isOptional()): ?>
 								[
@@ -75,14 +81,22 @@
 							<span class="param-type"><?= $param->getType() ?></span> 
 							<span class="param-name">$<?= $param->getName() ?></span>
 							<?php if($param->isOptional()): ?>
-								<span class="param-default">= <?= is_null($param->getDefaultValue()) ? "null" : $param->getDefaultValue() ?></span>
+								<span class="param-default">= 
+									<?php if(is_null($param->getDefaultValue())): ?>
+										null
+									<?php elseif(is_string($param->getDefaultValue())): ?>
+										"<?= $param->getDefaultValue() ?>"
+									<?php else: ?>
+										<?= $param->getDefaultValue() ?>
+									<?php endif; ?>
+								</span>
 								]
 							<?php endif; ?>
 						<?php endforeach; ?>
 
 						)
 					</div>
-					<p><?= str_replace("/", "", preg_replace("/\*/", "", $method->getDocComment())) ?></p>
+					<p><?= str_replace("@param", "<br>&nbsp;-&nbsp;", str_replace("/", "", preg_replace("/\*/", "", $method->getDocComment()))) ?></p>
 				</div>
 				<div class="col-2"></div>
 			</div>

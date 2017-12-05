@@ -42,8 +42,7 @@
 				<section id="preferences-user" class="mx-0 px-0 container placeholders d-none">
 					<form method="post" action="">
 						<?php
-						$query = "SELECT * FROM `preferences` WHERE `id_user`='". $_SESSION['id'] ."'";
-						$array = $db->getRowFromQuery($query, false);
+						$array = $api->getPreferences();
 						foreach ($array as $key => $value):
 							if($key != 'id' && $key != 'id_user'):
 						?>

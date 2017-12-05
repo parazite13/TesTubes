@@ -1,5 +1,6 @@
 <?php
 $url = getCurrentUrl(ABSURL);
+$url = explode("?", $url)[0];
 
 $folder = ABSPATH . 'pages';
 $pages = getAllFiles($folder);

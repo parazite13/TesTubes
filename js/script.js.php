@@ -260,20 +260,22 @@ function displayAuthors(results){
 				</a>\
 			</div>\
 			<div class="col-9">\
-				<p class="text-left my-0">\
+				<p class="channelTitle text-left my-0 <?php !$myPrefAuthor["titre"] ? print "d-none": print ""?>">\
 					<a href="https://www.youtube.com/channel/' + channelId + '">\
 						<em>' + channel + '</em>\
 					</a>\
 				</p>\
-				<p class="text-left <?php !$myPref["date"] ? print "d-none": print ""?>">Créée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</p>\
-				<p class="text-left <?php !$myPref["date"] ? print "d-none": print ""?>">' + description + '</p>\
-				<p class="nbVideos text-left"></p>\
+				<p class="text-left">\
+					<span class="channelDate bullet <?php !$myPrefAuthor["date"] ? print "d-none": print ""?>">Créée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</span>\
+					<span class="channelVideos bullet text-left <?php !$myPrefAuthor["videos"] ? print "d-none": print ""?>"></span>\
+				</p>\
+				<p class="channelDescr text-left <?php !$myPref["date"] ? print "d-none": print ""?>">' + description + '</p>\
 			</div>\
 		</div>';
 
 	});
 	
-	$('#search-results-authors').html(html);
+	$('#search-results-author-div').html(html);
 }
 
 function displayVideoInfos(){
@@ -298,7 +300,7 @@ function displayVideoInfos(){
 
 function displayChannelInfos(){
 
-	$('#search-results-authors > div').each(function(index, element){
+	$('#search-results-author-div > div').each(function(index, element){
 
 		var channelId = $(element).attr('channel');
 
@@ -310,7 +312,7 @@ function displayChannelInfos(){
 		}
 
 		$.getJSON(url, params, function (channelInfo) {
-			$('#channel-' + channelId + ' .nbVideos').html(formatInt(channelInfo.items[0].statistics.videoCount) + " vidéo(s)");
+			$('#channel-' + channelId + ' .channelVideos').html(formatInt(channelInfo.items[0].statistics.videoCount) + " vidéo(s)");
 		});
 	});
 }

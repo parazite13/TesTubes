@@ -127,19 +127,20 @@
 						<div class="form-group row ml-1">
 							<div class="form-check">
         						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["titre"] ? print "checked": print ""?> filter="videoTitle"> Titre
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["titre"] ? print "checked": print ""?> filter="channelTitle"> Titre
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["videos"] ? print "checked": print ""?> filter="videoViews"> Nombre de vidéos
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["videos"] ? print "checked": print ""?> filter="channelVideos"> Nombre de vidéos
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["date"] ? print "checked": print ""?> filter="videoDate"> Date de création
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["date"] ? print "checked": print ""?> filter="channelDate"> Date de création
           						</label>
           						<label class="form-check-label mx-1">
-            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["description"] ? print "checked": print ""?> filter="videoDescr"> Description
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["description"] ? print "checked": print ""?> filter="channelDescr"> Description
           						</label>
         					</div>
         				</div>
+        				<div id="search-results-author-div"></div>
 					</section>
 
 					<section id="search-results-map" class="mx-0 px-0 container text-center placeholders d-none">

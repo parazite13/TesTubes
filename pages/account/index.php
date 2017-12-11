@@ -23,13 +23,28 @@
 						WHERE `id_user` = '" . $_SESSION['id']."'";
 			$db->executeQuery($query);
 		}
+		//l'utilisateur a cliqué sur le bouton "enregistrer" dans les préférences auteurs
+		if (isset($_POST['changePrefAuthor'])){
+			$query = "	UPDATE `preferences_author` 
+						SET `titre` = ". (isset($_POST['titre']) ? '1' : '0') ." ,
+						`videos` = ". (isset($_POST['videos']) ? '1' : '0') ." ,
+						`date` = ". (isset($_POST['date']) ? '1' : '0') ." ,
+						`description` = ". (isset($_POST['description']) ? '1' : '0') ." 
+						WHERE `id_user` = '" . $_SESSION['id']."'";
+			$db->executeQuery($query);
+		}
 	?>
 	<div class="container margin-top">
 		<div class="control-group">
 			<ul id="tabbed-menu-main" class="nav nav-tabs">
 				<li class="nav-item">
 					<a href="#" data-content="preferences-user" class="nav-link">
-						Préférences
+						Préférences Vidéos
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#" data-content="preferences-author" class="nav-link">
+						Préférences Auteurs
 					</a>
 				</li>
 				<li class="nav-item">
@@ -56,6 +71,25 @@
 						endforeach;
 						?>
 						<button class="btn btn-success" name="changePref" role="button" type="submit">Enregistrer</button>
+					</form>
+				</section>
+				<section id="preferences-author" class="mx-0 px-0 container placeholders d-none">
+					<form method="post" action="">
+						<?php
+						$array = $api->getPreferencesAuthor();
+						foreach ($array as $key => $value):
+							if($key != 'id' && $key != 'id_user'):
+						?>
+								<label class="control control-checkbox">
+									<?= ucfirst($key) ?>
+									<input type="checkbox" <?php echo 'name="'.$key.'"' ?> <?php $value ? print 'checked="unchecked"':print ''?> />
+									<div class="control_indicator"></div>
+								</label>
+						<?php 
+							endif;
+						endforeach;
+						?>
+						<button class="btn btn-success" name="changePrefAuthor" role="button" type="submit">Enregistrer</button>
 					</form>
 				</section>
 				<section id="quiz-user" class="mx-0 px-0 container placeholders d-none">

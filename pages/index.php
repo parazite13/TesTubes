@@ -23,10 +23,16 @@
 							'description' => 1,
 							'duree' => 1
 						);
+			$myPrefAuthor = array('titre' => 1,
+							'videos' => 1,
+							'date' => 1,
+							'description' => 1
+						);
 		}
 		//utilisateur connecté -> va chercher ses préférences dans la bdd
 		else{
 			$myPref = $api->getPreferences();
+			$myPrefAuthor = $api->getPreferencesAuthor();
 		}
 	?>
 
@@ -116,8 +122,25 @@
      					</div>
      					<div id="search-results-videos-div"></div>
 					</section>
-
-					<section id="search-results-authors" class="mx-0 px-0 container text-center placeholders d-none"></section>
+						
+					<section id="search-results-authors" class="mx-0 px-0 container text-center placeholders d-none">
+						<div class="form-group row ml-1">
+							<div class="form-check">
+        						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["titre"] ? print "checked": print ""?> filter="videoTitle"> Titre
+          						</label>
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["videos"] ? print "checked": print ""?> filter="videoViews"> Nombre de vidéos
+          						</label>
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["date"] ? print "checked": print ""?> filter="videoDate"> Date de création
+          						</label>
+          						<label class="form-check-label mx-1">
+            						<input class="form-check-input" type="checkbox" <?php $myPrefAuthor["description"] ? print "checked": print ""?> filter="videoDescr"> Description
+          						</label>
+        					</div>
+        				</div>
+					</section>
 
 					<section id="search-results-map" class="mx-0 px-0 container text-center placeholders d-none">
 

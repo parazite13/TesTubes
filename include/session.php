@@ -29,6 +29,14 @@
 							'duree' => 1
 						);
 		$db->insertInto('preferences', $arrayPref);
+		//inclut des pref par défaut dans les prefs des auteurs
+		$arrayPrefAuthor = array( 'id_user' => $db->getLastInsertId(), 
+							'titre' => 1,
+							'videos' => 1,
+							'date' => 1,
+							'description' => 1
+						);
+		$db->insertInto('preferences_author', $arrayPrefAuthor);
 		//connecte l'utilisateur quand il s'inscrit
 		$_POST['username-con'] = $_POST['username-inscr'];
 		$_POST['pwd-con'] = $_POST['pwd-inscr'];

@@ -247,10 +247,11 @@ function displayAuthors(results){
 	var entries = results.items;
 
 	$.each(entries, function (index, value) {
-
 		var channel = value.snippet.channelTitle;
 		var channelId = value.snippet.channelId;
 		var thumbnail = value.snippet.thumbnails.medium.url;
+		var description = value.snippet.description;
+		var publishedAt = new Date(value.snippet.publishedAt);
 
 		html += '<div id="channel-' + channelId + '" channel="' + channelId + '" class="row p-2">\
 			<div class="col-1 py-2 px-0">\
@@ -264,6 +265,8 @@ function displayAuthors(results){
 						<em>' + channel + '</em>\
 					</a>\
 				</p>\
+				<p class="text-left <?php !$myPref["date"] ? print "d-none": print ""?>">Créée le ' + formatDate(publishedAt.getDay(), publishedAt.getMonth() + 1, publishedAt.getFullYear() ) + '</p>\
+				<p class="text-left <?php !$myPref["date"] ? print "d-none": print ""?>">' + description + '</p>\
 				<p class="nbVideos text-left"></p>\
 			</div>\
 		</div>';

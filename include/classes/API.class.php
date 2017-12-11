@@ -35,6 +35,16 @@ class API{
 	}
 
 	/**
+	 * Retourne un tableau contenant l'information quant à l'affichage ou non des préférences
+	 * de l'utilisateur concernant les auteurs
+	 */
+	function getPreferencesAuthor() : array{
+		$this->checkUserId();
+
+		return $this->db->getRowFromQuery("SELECT * FROM `preferences_author` WHERE `id_user` = '" . $this->userId . "'", false);
+	}
+
+	/**
 	 * Renvoie l'ensemble des catégories présentes en base de données
 	 */
 	function getCategories() : array{

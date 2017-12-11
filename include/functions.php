@@ -24,8 +24,13 @@ function getHead(){
 ///////////////////////////
 
 // Renvoie true si on est admin
+function isAdmin(){
+    return isset($_SESSION['pseudo']) && $_SESSION['pseudo'] == "Admin";
+}
+
+// Renvoie true si on est admin
 function isConnected(){
-	return $_SESSION['connect'];
+	return isset($_SESSION['pseudo']) && $_SESSION['connect'];
 }
 
 
@@ -111,5 +116,9 @@ function echoAlert($type, $msg){
                   	}, 3000);
                 })
            	</script>';
+}
+
+function isHomePage(){
+    return getCurrentUrl() == ABSURL;
 }
 ?>

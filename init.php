@@ -259,10 +259,6 @@ die();
 // print_r($results);
 // die();
 
-// echo '<pre>';
-// print_r($mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray());
-// die();
-
 // Initialise les variables de session
 require(ABSPATH . 'include/session.php');
 

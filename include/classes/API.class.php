@@ -52,6 +52,19 @@ class API{
 	}
 
 	/**
+	 * Renvoie un tableau contenant les commentaires d'une video
+	 * @param  integer $category id de la catégorie pour laquelle les problemes doivent etre affichés
+	 * 0 indique que tous les commentaires de toutes les videos doivent être récupérés
+	 */
+	function getComments($video = 0) : array{
+		if($video == 0){
+			return $this->mongoDb->getComments()->find(array(), array("summary" => true))->toArray();
+		}else{
+			return $this->mongoDb->getComments()->find(array('id_video'=>array('$in'=>$videoId)))->toArray();
+		}
+	}
+
+	/**
 	 * Renvoie un tableau contenant les ids des problemes
 	 * @param  integer $category id de la catégorie pour laquelle les problemes doivent etre affichés
 	 * 0 indique que tous les problèmes de toutes les catégories doivent être récupérés

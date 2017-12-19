@@ -255,7 +255,7 @@ die();
 // $mongoDb->getQuestions()->updateOne(array('id'=>3), array('$set'=>array('problem'=>2)));
 // $mongoDb->getQuestions()->updateOne(array('id'=>4), array('$set'=>array('problem'=>3)));
 // $mongoDb->getQuestions()->updateOne(array('id'=>5), array('$set'=>array('problem'=>4)));
-// $results = $mongoDb->getScores()->find(array(), array("summary" => true))->toArray();
+// $results = $mongoDb->getComments()->find(array(), array("summary" => true))->toArray();
 // print_r($results);
 // die();
 

@@ -5,9 +5,8 @@ require '../init.php';
 
 $port = $_POST['port'];
 $array = array();
-$output = "";
 
-exec('WMIC path win32_process get Caption,Processid,Commandline', $array, $output);
+exec('WMIC path win32_process get Caption,Processid,Commandline', $array);
 
 $matches;
 foreach($array as $process){
@@ -17,6 +16,5 @@ foreach($array as $process){
 		exec($cmd);
 	}
 }
-
 
 ?>

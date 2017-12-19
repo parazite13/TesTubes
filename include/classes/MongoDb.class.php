@@ -20,6 +20,7 @@ class MongoDb{
 		$this->questions = $this->bd->selectCollection('questions');
 		$this->problems = $this->bd->selectCollection('problems');
 		$this->scores = $this->bd->selectCollection('scores');
+		$this->comments = $this->bd->selectCollection('comments');
 	}
 
 	function getCategories(){
@@ -36,6 +37,9 @@ class MongoDb{
 
 	function getScores(){
 		return $this->scores;
+	}
+	function getComments(){
+		return $this->comments;
 	}
 }
 

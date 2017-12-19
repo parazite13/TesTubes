@@ -60,7 +60,7 @@ class API{
 		if($video == 0){
 			return $this->mongoDb->getComments()->find(array(), array("summary" => true))->toArray();
 		}else{
-			return $this->mongoDb->getComments()->find(array('id_video'=>array('$in'=>$videoId)))->toArray();
+			return $this->mongoDb->getComments()->find(array('id_video'=>$video))->toArray();
 		}
 	}
 

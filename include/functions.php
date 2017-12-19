@@ -121,4 +121,9 @@ function echoAlert($type, $msg){
 function isHomePage(){
     return getCurrentUrl() == ABSURL;
 }
+
+function execInBackground($cmd) { 
+    $shell = new COM("WScript.Shell");
+    $shell->run($cmd, 0, false);
+} 
 ?>

@@ -11,7 +11,6 @@
 	}
 
 	.container{
-		height: 100vh;
 		background-color: rgb(242, 242, 242);
 	}
 

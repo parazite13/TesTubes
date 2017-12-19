@@ -349,12 +349,12 @@ function displayResults(results) {
 		html += 
 			'<div id="video-' + videoId + '" video="' + videoId + '" class="row p-2">\
 				<div class="col-3 py-2 px-0">\
-					<a href="https://www.youtube.com/watch?v=' + videoId + '">\
+					<a href="<?=ABSURL?>video?v=' + videoId + '">\
 		 				<img src="' + thumbnail + '" style="width:100%;height:auto">\
 					</a>\
 				</div>\
 				<div class="col-9">\
-					<a href="https://www.youtube.com/watch?v=' + videoId + '">\
+					<a href="<?=ABSURL?>video?v=' + videoId + '">\
 						<h4 class="text-left videoTitle <?php !$myPref["titre"] ? print "d-none": print ""?>">' + title + '</h4>\
 					</a>\
 					<p class="text-left my-0">\

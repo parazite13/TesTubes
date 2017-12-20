@@ -66,7 +66,7 @@ class API{
 		}
 
 		uasort($array, function($a, $b){
-			return $a->time_video > $b->time_video;
+			return $a->time_video < $b->time_video;
 		});
 
 

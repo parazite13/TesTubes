@@ -122,8 +122,16 @@ function isHomePage(){
     return getCurrentUrl() == ABSURL;
 }
 
-function execInBackground($cmd) { 
-    $shell = new COM("WScript.Shell");
-    $shell->run($cmd, 0, false);
+function isMyProfilePage(){
+    return getCurrentUrl() == ABSURL . "/video";
+}
+
+function execInBackground($cmd) {
+    if (substr(php_uname(), 0, 7) == "Windows"){ 
+        $shell = new COM("WScript.Shell");
+        $shell->run($cmd, 0, false);
+    }else{
+        exec($cmd . " > /dev/null &");
+    }
 } 
 ?>

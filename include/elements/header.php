@@ -3,7 +3,7 @@
 	<a class="navbar-brand" href="<?=ABSURL?>">TesTubes</a>
 
 	<form id="search-term" class="d-inline-block form-inline mt-2 mt-md-0">
-		<?php if(isHomePage()): ?>
+		<?php if(!isMyProfilePage()): ?>
 			<input id="query" class="form-control mr-sm-2" type="text" placeholder="Rechercher">
 			<button role="button" class="btn btn-outline-secondary my-2 my-sm-0" type="submit">
 				<i class="fa fa-search" aria-hidden="true"></i>

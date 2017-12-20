@@ -56,10 +56,10 @@ class API{
 	 * @param  mixed $video id de la video pour laquelle les commentaires doivent etre affichés
 	 * 0 indique que tous les commentaires de toutes les videos doivent être récupérés
 	 */
-	function getComments($video = 0) : array{
+	function getComments($video = null) : array{
 
 		$array = array();
-		if($video == 0){
+		if($video == null){
 			$array = $this->mongoDb->getComments()->find(array(), array("summary" => true))->toArray();
 		}else{
 			$array = $this->mongoDb->getComments()->find(array('id_video'=>$video))->toArray();
@@ -68,6 +68,7 @@ class API{
 		uasort($array, function($a, $b){
 			return $a->time_video > $b->time_video;
 		});
+
 
 		return $array;
 	}

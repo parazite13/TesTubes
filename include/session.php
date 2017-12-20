@@ -63,5 +63,4 @@
 		header("Location: " . ABSURL);
 		exit;
 	}
-	//chouxCrouteGarnieDu13
 ?>

@@ -47,7 +47,7 @@
 				$comments = array();
 				foreach($results as $result) $comments[$result['id']] = $result['pseudo']; ?>
 				<?php foreach ($array as $comment): ?>
-				<div class="main-com card d-none mt-2" time="<?=$comment->time_video?>">
+				<div class="main-com card mt-2 dnone" time="<?=$comment->time_video?>">
 					<div class="card-header">
 						<div class="col-12 header-com">
 							Écrit par <b><?=$comments[$comment->id_user]?></b> à <?=$comment->date?>
@@ -73,7 +73,9 @@
 					var comments = $('.main-com');
 					$.each(comments, function(index, comment){
 						if(parseInt($(this).attr('time')) < time ){
-							$(this).removeClass('d-none');
+							$(this).fadeIn(1000, function(){
+								$(this).removeClass("dnone");
+							});
 						}
 					});
 				}, 1000);

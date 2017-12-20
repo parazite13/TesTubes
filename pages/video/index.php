@@ -50,7 +50,7 @@
 				<div class="main-com card mt-2 dnone" time="<?=$comment->time_video?>">
 					<div class="card-header">
 						<div class="col-12 header-com">
-							Écrit par <b><?=$comments[$comment->id_user]?></b> à <?=$comment->date?>
+							Écrit par <b><?=$comments[$comment->id_user]?></b> (<?=$comment->date?>)
 						</div>
 					</div>
 					<div class="card-block">
@@ -96,7 +96,7 @@
 						var html = '<div class="main-com card mt-2" time="' + timeComment + '">\
 										<div class="card-header">\
 											<div class="col-12 header-com">\
-												Écrit par <b><?=$_SESSION["pseudo"]?></b> à ' + new Date() + '\
+												Écrit par <b><?=isset($_SESSION["pseudo"])?$_SESSION["pseudo"]:""?></b> ( ' + date.getFullYear() + '-' + (date.getMonth() + 1).toString().lpad('0', 2) + '-' + date.getDate().toString().lpad('0', 2) + ' ' + date.getHours().toString().lpad('0', 2) + ':' + date.getMinutes().toString().lpad('0', 2) + ':' + date.getSeconds().toString().lpad('0', 2) + ')\
 											</div>\
 										</div>\
 										<div class="card-block">\

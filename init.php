@@ -262,7 +262,7 @@ die();
 // Initialise les variables de session
 require(ABSPATH . 'include/session.php');
 
-// Initialise l'API
+// Initialise l'API pour l'utilisateur connecté
 $id = isset($_SESSION['id']) ? $_SESSION['id'] : null;
 $api = new Api($id);
 

@@ -37,28 +37,30 @@
 				<button class="btn btn-success" role="button" onclick="checkComment()">Publier</button>
 			<?php endif ?>
 
-			<?php 
-			$array = $api->getComments($video);
-			$query = "SELECT `id`, `pseudo` FROM `users` WHERE ";
-			foreach($array as $comment) $query .= "`id`=" . $comment->id_user . " OR ";
-			$query = substr($query, 0, -3);
-			$results = $db->getRowsFromQuery($query, false);
-			$comments = array();
-			foreach($results as $result) $comments[$result['id']] = $result['pseudo']; ?>
-			<?php foreach ($array as $comment): ?>
-			<div class="main-com">
-				<div class="row mt-2">
-					<div class="col-12 header-com">
-						Écrit par <b><?=$comments[$comment->id_user]?></b> à <?=$comment->date?>
+			<div class="comments-block">
+				<?php 
+				$array = $api->getComments($video);
+				$query = "SELECT `id`, `pseudo` FROM `users` WHERE ";
+				foreach($array as $comment) $query .= "`id`=" . $comment->id_user . " OR ";
+				$query = substr($query, 0, -3);
+				$results = $db->getRowsFromQuery($query, false);
+				$comments = array();
+				foreach($results as $result) $comments[$result['id']] = $result['pseudo']; ?>
+				<?php foreach ($array as $comment): ?>
+				<div class="main-com card mt-2">
+					<div class="card-header">
+						<div class="col-12 header-com">
+							Écrit par <b><?=$comments[$comment->id_user]?></b> à <?=$comment->date?>
+						</div>
+					</div>
+					<div class="card-block">
+						<div class="col-12 com">
+							<?=$comment->comment;?>
+						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-12 com">
-						<?=$comment->comment;?>
-					</div>
-				</div>
+				<?php endforeach?>
 			</div>
-			<?php endforeach?>
 		</div>
 
 		<script type="text/javascript">

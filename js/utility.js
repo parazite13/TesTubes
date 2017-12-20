@@ -22,3 +22,10 @@ function formatInt(nStr){
 	
 	return x1 + x2;
 }
+
+String.prototype.lpad = function(padString, length) {
+	var str = this;
+	while (str.length < length)
+		str = padString + str;
+	return str;
+}

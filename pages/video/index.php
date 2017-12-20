@@ -39,7 +39,7 @@
 
 			<?php $array = $api->getComments($video);?>
 			<?php foreach ($array as $comment): ?>
-			<div class="main-com">
+			<div class="main-com d-none" time="<?=$comment->time_video?>">
 				<div class="row mt-2">
 					<div class="col-12 header-com">
 						Écrit par <b><?=$comment->id_user?></b> à <?=$comment->date?>
@@ -59,6 +59,15 @@
 			$(document).ready(function(){
 				chrono = new Timer();
 				chrono.run();
+				setInterval(function(){
+					var time = parseInt(chrono.min) * 60 + parseInt(chrono.sec);
+					var comments = $('.main-com');
+					$.each(comments, function(index, comment){
+						if(parseInt($(this).attr('time')) < time ){
+							$(this).removeClass('d-none');
+						}
+					});
+				}, 1000);
 			});
 
 			$(window).bind('beforeunload', function(e){

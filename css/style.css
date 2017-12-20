@@ -6,6 +6,10 @@
 
 }
 
+.dnone{
+    display: none;
+}
+
 #search-term{
     margin: auto;
 	width: 50%;

@@ -86,13 +86,34 @@
 			});
 
 			function checkComment(){
-				var url = 'ajax/checkComment.php';
-				var idVideo = '<?=$video?>';
-				var myComment = $('#comment').val();
-				var timeComment = parseInt(chrono.min) * 60 + parseInt(chrono.sec);
-				$.get(url, {id_video:idVideo, comment:myComment, chrono:timeComment}, function(results){
-					console.log(results);
-				});
+				if($('#comment').val().length > 0){
+					var url = 'ajax/checkComment.php';
+					var idVideo = '<?=$video?>';
+					var myComment = $('#comment').val();
+					$('#comment').val('');
+					var timeComment = parseInt(chrono.min) * 60 + parseInt(chrono.sec);
+					var date = new Date();
+						var html = '<div class="main-com card mt-2" time="' + timeComment + '">\
+										<div class="card-header">\
+											<div class="col-12 header-com">\
+												Écrit par <b><?=$_SESSION["pseudo"]?></b> à ' + new Date() + '\
+											</div>\
+										</div>\
+										<div class="card-block">\
+											<div class="col-12 com">\
+												' + myComment + '\
+											</div>\
+										</div>\
+									</div>'
+					$.get(url, {id_video:idVideo, comment:myComment, chrono:timeComment}, function(results){
+						var allDnone = $('.comments-block').find('.dnone');
+						if(allDnone.length > 0){
+							$(allDnone[allDnone.length - 1]).after(html);
+						}else{
+							$('.comments-block').prepend(html);
+						}
+					});
+				}
 			}
 
 			function Timer(){

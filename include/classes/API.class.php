@@ -53,15 +53,23 @@ class API{
 
 	/**
 	 * Renvoie un tableau contenant les commentaires d'une video
-	 * @param  integer $category id de la catégorie pour laquelle les problemes doivent etre affichés
+	 * @param  mixed $video id de la video pour laquelle les commentaires doivent etre affichés
 	 * 0 indique que tous les commentaires de toutes les videos doivent être récupérés
 	 */
 	function getComments($video = 0) : array{
+
+		$array = array();
 		if($video == 0){
-			return $this->mongoDb->getComments()->find(array(), array("summary" => true))->toArray();
+			$array = $this->mongoDb->getComments()->find(array(), array("summary" => true))->toArray();
 		}else{
-			return $this->mongoDb->getComments()->find(array('id_video'=>$video))->toArray();
+			$array = $this->mongoDb->getComments()->find(array('id_video'=>$video))->toArray();
 		}
+
+		uasort($array, function($a, $b){
+			return $a->time_video > $b->time_video;
+		});
+
+		return $array;
 	}
 
 	/**
@@ -69,7 +77,7 @@ class API{
 	 * @param  integer $category id de la catégorie pour laquelle les problemes doivent etre affichés
 	 * 0 indique que tous les problèmes de toutes les catégories doivent être récupérés
 	 */
-	function getProblems($category = 0) : array{
+	function getProblems(int $category = 0) : array{
 		if($category == 0){
 			return $this->mongoDb->getProblems()->find(array(), array("summary" => true))->toArray();
 		}else{
@@ -85,7 +93,7 @@ class API{
 	 * @param  integer $problem id du probleme pour laquelle les questions doivent etre affichés
 	 * 0 indique que toute les questions de tous les problemes doivent être récupérées
 	 */
-	function getQuestions($category = 0, $problem = 0) : array{
+	function getQuestions(int $category = 0, int $problem = 0) : array{
 		if($category == 0 && $problem == 0){
 			return $this->mongoDb->getQuestions()->find(array(), array("summary" => true))->toArray();
 		}else{

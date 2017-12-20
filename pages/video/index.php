@@ -19,7 +19,7 @@
 		if($port > 1005){
 			file_put_contents(ABSPATH.'port.txt', 1000);
 		}
-		execInBackground('"D:\Programmes\VLC\vlc.exe" https://www.youtube.com/watch?v='.$video.' :sout=#transcode{vcodec=theo,vb=800,acodec=vorb,ab=128,channels=2,samplerate=44100}:http{mux=ogg,dst=:'.$port.'/} :sout-keep'); 
+		execInBackground('"C:\Program Files\VideoLAN\VLC\vlc.exe" https://www.youtube.com/watch?v='.$video.' :sout=#transcode{vcodec=theo,vb=800,acodec=vorb,ab=128,channels=2,samplerate=44100}:http{mux=ogg,dst=:'.$port.'/} :sout-keep'); 
 		?>
 
 		<div class="container">
@@ -37,12 +37,19 @@
 				<button class="btn btn-success" role="button" onclick="checkComment()">Publier</button>
 			<?php endif ?>
 
-			<?php $array = $api->getComments($video);?>
+			<?php 
+			$array = $api->getComments($video);
+			$query = "SELECT `id`, `pseudo` FROM `users` WHERE ";
+			foreach($array as $comment) $query .= "`id`=" . $comment->id_user . " OR ";
+			$query = substr($query, 0, -3);
+			$results = $db->getRowsFromQuery($query, false);
+			$comments = array();
+			foreach($results as $result) $comments[$result['id']] = $result['pseudo']; ?>
 			<?php foreach ($array as $comment): ?>
 			<div class="main-com d-none" time="<?=$comment->time_video?>">
 				<div class="row mt-2">
 					<div class="col-12 header-com">
-						Écrit par <b><?=$comment->id_user?></b> à <?=$comment->date?>
+						Écrit par <b><?=$comments[$comment->id_user]?></b> à <?=$comment->date?>
 					</div>
 				</div>
 				<div class="row">

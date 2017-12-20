@@ -15,4 +15,7 @@ define('DB_HOST', 'localhost');
 // Nom de la base de données
 define('DB_NAME', 'testubes');
 
+// Chemin vers l'executable de VLC
+define('VLC_PATH', 'C:\Program Files\VideoLAN\VLC\vlc.exe');
+
 ?>

@@ -19,7 +19,7 @@
 		if($port > 1005){
 			file_put_contents(ABSPATH.'port.txt', 1000);
 		}
-		execInBackground('"C:\Program Files\VideoLAN\VLC\vlc.exe" https://www.youtube.com/watch?v='.$video.' :sout=#transcode{vcodec=theo,vb=800,acodec=vorb,ab=128,channels=2,samplerate=44100}:http{mux=ogg,dst=:'.$port.'/} :sout-keep'); 
+		execInBackground('"D:\Programmes\VLC\vlc.exe" https://www.youtube.com/watch?v='.$video.' :sout=#transcode{vcodec=theo,vb=800,acodec=vorb,ab=128,channels=2,samplerate=44100}:http{mux=ogg,dst=:'.$port.'/} :sout-keep'); 
 		?>
 
 		<div class="container">
@@ -88,8 +88,26 @@
 				var idVideo = '<?=$video?>';
 				var myComment = $('#comment').val();
 				var timeComment = parseInt(chrono.min) * 60 + parseInt(chrono.sec);
+				var date = new Date();
+					var html = '<div class="main-com card d-none mt-2" time="' + timeComment + '">\
+									<div class="card-header">\
+										<div class="col-12 header-com">\
+											Écrit par <b><?=$_SESSION["pseudo"]?></b> à ' + new Date() + '\
+										</div>\
+									</div>\
+									<div class="card-block">\
+										<div class="col-12 com">\
+											' + myComment + '\
+										</div>\
+									</div>\
+								</div>'
 				$.get(url, {id_video:idVideo, comment:myComment, chrono:timeComment}, function(results){
-					console.log(results);
+					var allDnone = $('.comments-block').find('.d-none');
+					if(allDnone.length > 0){
+						$(allDnone[allDnone.length - 1]).after(html);
+					}else{
+						$('.comments-block').prepend(html);
+					}
 				});
 			}
 

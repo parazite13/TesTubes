@@ -42,8 +42,10 @@
 			$query = "SELECT `id`, `pseudo` FROM `users` WHERE ";
 			foreach($array as $comment) $query .= "`id`=" . $comment->id_user . " OR ";
 			$query = substr($query, 0, -3);
-			$comments = $db->getRowsFromQuery($query);
-			foreach ($array as $comment): ?>
+			$results = $db->getRowsFromQuery($query, false);
+			$comments = array();
+			foreach($results as $result) $comments[$result['id']] = $result['pseudo']; ?>
+			<?php foreach ($array as $comment): ?>
 			<div class="main-com">
 				<div class="row mt-2">
 					<div class="col-12 header-com">

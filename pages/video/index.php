@@ -27,6 +27,16 @@
 				<video id="video" autoplay="" port="<?= $port ?>" style="width: 100%">
 					<source src="http://testubes:<?= $port ?>"/>
 				</video>
+				<div style="width: 100%">
+					<button role="button" class="btn play-pause"><i class="fa fa-pause" aria-hidden="true"></i></button>
+					<div class="progress">
+						<?php foreach($api->getComments($video) as $comment): ?>
+							<div class="comment-cursor" time="<?=$comment->time_video?>"></div>
+						<?php endforeach; ?>
+						<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+					<button role="button" class="btn fullscreen"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+				</div>
 			</div>
 
 			<?php if(isConnected()):?>
@@ -60,12 +70,11 @@
 		</div>
 
 		<script type="text/javascript">
-			var chrono;
+			var duration;
+
 			$(document).ready(function(){
-				chrono = new Timer();
-				chrono.run();
 				setInterval(function(){
-					var time = parseInt(chrono.min) * 60 + parseInt(chrono.sec);
+					var time = $('#video')[0].currentTime;
 					var comments = $('.main-com');
 					$.each(comments, function(index, comment){
 						if(parseInt($(this).attr('time')) < time ){
@@ -74,7 +83,75 @@
 							});
 						}
 					});
+
+					$('.progress-bar').css('width', ($('#video')[0].currentTime * 100/ duration) + "%")
+
 				}, 1000);
+
+				$('.play-pause').click(function(){
+					var video = $('#video');
+					var icon = $(this).find('i');
+					if(video[0].paused){
+						video[0].play();
+						icon.removeClass('fa-play');
+						icon.addClass('fa-pause');
+					}else{
+						video[0].pause();
+						icon.removeClass('fa-pause');
+						icon.addClass('fa-play');
+					}
+				});
+
+				$('.fullscreen').click(function(){
+					$('#video')[0].webkitRequestFullScreen();
+				});
+
+				var videoId = '<?= isset($_GET['v']) ? $_GET['v'] : ''?>';
+
+				var url = 'https://www.googleapis.com/youtube/v3/videos';
+				var params = {
+					part: 'contentDetails',
+					id: videoId,
+					key:'AIzaSyCKqVcvBxViYhySoAa0ArgkjN0X1bucHmw'
+				}
+
+				$.getJSON(url, params, function (videoInfo) {
+					duration = videoInfo.items[0].contentDetails.duration;
+					var regex = /PT([0-9]*)H?([0-9]*)M?([0-9]*)S/;
+					var matches = duration.match(regex);
+
+					var min = 0;
+					var sec = 0;
+					var hour = 0;
+
+					if(matches[2] == ""){
+
+						// seconde
+						if(matches[3] == ""){
+							sec = matches[1];
+
+						// minute et seconde
+						}else{
+							min = matches[1];
+							sec = matches[3];
+						}
+
+					// heure minute et seconde
+					}else{
+						hour = matches[1];
+						min = matches[2];
+						sec = matches[3];
+					}
+
+					duration = parseInt(hour) * 3600 + parseInt(min) * 60 + parseInt(sec);
+
+					$.each($('.progress .comment-cursor'), function(index, comment){
+
+						var time = parseInt($(comment).attr('time'));
+						$(comment).css('left', (time * 100 / duration) + "%");
+
+					});
+				});
 			});
 
 			$(window).bind('beforeunload', function(e){
@@ -87,7 +164,7 @@
 					var idVideo = '<?=$video?>';
 					var myComment = $('#comment').val();
 					$('#comment').val('');
-					var timeComment = parseInt(chrono.min) * 60 + parseInt(chrono.sec);
+					var timeComment = $('#video')[0].currentTime;
 					var date = new Date();
 						var html = '<div class="main-com card mt-2" time="' + timeComment + '">\
 										<div class="card-header">\
@@ -156,6 +233,7 @@
 					this.run();
 				}
 			}
+
 		</script>
 
 	<?php else: ?>

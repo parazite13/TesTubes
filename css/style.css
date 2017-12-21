@@ -6,6 +6,19 @@
 
 }
 
+.comment-cursor{
+    position:  absolute;
+    width:5px;
+    background:yellow;
+    height: 16px;
+}
+
+.progress{
+    width: 80%;
+    display: inline-flex;
+    position: relative;
+}
+
 .dnone{
     display: none;
 }

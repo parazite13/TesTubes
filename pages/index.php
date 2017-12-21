@@ -192,6 +192,18 @@
 			include ABSPATH."js/script.js.php";
 		echo '</script>';
 		getFooter(); 
+
+		if(isset($_GET['q'])){
+			echo '
+			<script>
+				$(document).ready(function(){
+					searchTerm = $("#query").val();
+					displayVideos(searchTerm);
+					getAuthors(searchTerm);
+				});
+			</script>
+			';
+		}
 	?>
 
 </body>

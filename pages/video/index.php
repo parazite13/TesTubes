@@ -24,7 +24,7 @@
 
 		<div class="container">
 			<div style="margin-top: 80px;">
-				<video id="video" controls="" autoplay="" port="<?= $port ?>" style="width: 100%">
+				<video id="video" autoplay="" port="<?= $port ?>" style="width: 100%">
 					<source src="http://testubes:<?= $port ?>"/>
 				</video>
 			</div>
@@ -48,15 +48,11 @@
 				foreach($results as $result) $comments[$result['id']] = $result['pseudo']; ?>
 				<?php foreach ($array as $comment): ?>
 				<div class="main-com card mt-2 dnone" time="<?=$comment->time_video?>">
-					<div class="card-header">
-						<div class="col-12 header-com">
-							Écrit par <b><?=$comments[$comment->id_user]?></b> (<?=$comment->date?>)
-						</div>
+					<div class="card-header col-12 header-com">
+						Écrit par <b><?=$comments[$comment->id_user]?></b> (<?=$comment->date?>)
 					</div>
-					<div class="card-block">
-						<div class="col-12 com">
-							<?=$comment->comment;?>
-						</div>
+					<div class="card-block col-12 com">
+						<?=$comment->comment;?>
 					</div>
 				</div>
 				<?php endforeach?>
@@ -164,7 +160,7 @@
 
 	<?php else: ?>
 
-		<p style="margin-top:80px;">Vous n'avez pas renseigné de vidéo (abruti...)</p>
+		<p style="margin-top:80px;">Vous n'avez pas renseigné de vidéo ...</p>
 
 	<?php endif; ?>
 

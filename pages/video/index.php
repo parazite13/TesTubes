@@ -29,13 +29,13 @@
 				</video>
 				<div style="width: 100%">
 					<button role="button" class="btn play-pause"><i class="fa fa-pause" aria-hidden="true"></i></button>
-					<div class="progress">
+					<div class="progress" style="width:calc(100% - 100px)">
 						<?php foreach($api->getComments($video) as $comment): ?>
 							<div class="comment-cursor" time="<?=$comment->time_video?>"></div>
 						<?php endforeach; ?>
-						<div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+						<div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
 					</div>
-					<button role="button" class="btn fullscreen"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+					<button role="button" class="btn fullscreen ml-1" style=" position: absolute;"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
 				</div>
 			</div>
 
@@ -165,26 +165,19 @@
 					var myComment = $('#comment').val();
 					$('#comment').val('');
 					var timeComment = $('#video')[0].currentTime;
-					var date = new Date();
-						var html = '<div class="main-com card mt-2" time="' + timeComment + '">\
-										<div class="card-header">\
-											<div class="col-12 header-com">\
-												Écrit par <b><?=isset($_SESSION["pseudo"])?$_SESSION["pseudo"]:""?></b> ( ' + date.getFullYear() + '-' + (date.getMonth() + 1).toString().lpad('0', 2) + '-' + date.getDate().toString().lpad('0', 2) + ' ' + date.getHours().toString().lpad('0', 2) + ':' + date.getMinutes().toString().lpad('0', 2) + ':' + date.getSeconds().toString().lpad('0', 2) + ')\
-											</div>\
-										</div>\
-										<div class="card-block">\
-											<div class="col-12 com">\
-												' + myComment + '\
-											</div>\
-										</div>\
-									</div>'
-					$.get(url, {id_video:idVideo, comment:myComment, chrono:timeComment}, function(results){
+	
+					$.get(url, {id_video:idVideo, comment:myComment, chrono:timeComment}, function(result){
+						//inclut le commentaire dans la liste
 						var allDnone = $('.comments-block').find('.dnone');
 						if(allDnone.length > 0){
-							$(allDnone[allDnone.length - 1]).after(html);
+							$(allDnone[allDnone.length - 1]).after(result);
 						}else{
-							$('.comments-block').prepend(html);
+							$('.comments-block').prepend(result);
 						}
+
+						//ajoute le curseur du commentaire sur la vidéo
+						var html = '<div class="comment-cursor" time="'+ timeComment + '" style="left:' + (timeComment * 100 / duration) + '%"></div>'
+						$('.progress').append(html);
 					});
 				}
 			}

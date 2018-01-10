@@ -145,10 +145,10 @@
 				<section id="api" class="mx-0 px-0 container placeholders d-none">
 					<label id="activate-api" class="control control-checkbox" style="width:fit-content">
 	                    Activer l'API
-	                    <input type="checkbox" name="api" value="api" <?php $_SESSION['api_key'] != null ? print 'checked="checked"':print ''?>/>
+	                    <input type="checkbox" name="api" value="api" <?php isset($_SESSION['api_key']) ? print 'checked="checked"':print ''?>/>
 	                    <div class="control_indicator"></div>
 	                </label>
-	                Clef: <span id="api-value"><?= isset($_SESSION['api_key']) ? print $_SESSION['api_key'] : print '' ?></span>
+	                Clef : <span id="api-value"><?php isset($_SESSION['api_key']) && $_SESSION['api_key'] != null ? print $_SESSION['api_key'] : print '' ?></span>
 				</section>
 			</div>
 		</div>

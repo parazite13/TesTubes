@@ -25,11 +25,13 @@ if (substr(php_uname(), 0, 7) == "Windows"){
 
 	$matches;
 	foreach($array as $process){
-		if(strpos($process, 'vlc ') !== false){
-			preg_match('/([0-9])+/', $process, $matches);
-			$pid = $matches[1];
-			$cmd = 'kill -9 ' . $pid;
-			exec($cmd);
+		if(strpos($process, 'vlc ') !== false || strpos($process, 'VLC ') !== false){
+			if(strpos($process, 'dst=:'.$port) !== false){
+				preg_match('/([0-9])+/', $process, $matches);
+				$pid = $matches[1];
+				$cmd = 'kill -9 ' . $pid;
+				exec($cmd);
+			}
 		}
 	}
 }

@@ -51,6 +51,7 @@
 			$_SESSION['connect'] = true;
 			$_SESSION['pseudo'] = $user['pseudo'];
 			$_SESSION['id'] = $user['id'];
+			$_SESSION['api_key'] = $user['api_key'];
 			if(isset($_POST['request_url'])){
 				header('Location: ' . $_POST['request_url']);
 				exit;
@@ -63,4 +64,5 @@
 		header("Location: " . ABSURL);
 		exit;
 	}
+
 ?>

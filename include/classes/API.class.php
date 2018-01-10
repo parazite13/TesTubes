@@ -53,10 +53,10 @@ class API{
 
 	/**
 	 * Renvoie un tableau contenant les commentaires d'une video
-	 * @param  mixed $video id de la video pour laquelle les commentaires doivent etre affichés
-	 * 0 indique que tous les commentaires de toutes les videos doivent être récupérés
+	 * @param  string $video id de la video pour laquelle les commentaires doivent etre affichés
+	 * null indique que tous les commentaires de toutes les videos doivent être récupérés
 	 */
-	function getComments($video = null) : array{
+	function getComments(string $video = null) : array{
 
 		$array = array();
 		if($video == null){

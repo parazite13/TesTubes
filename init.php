@@ -263,7 +263,13 @@ die();
 require(ABSPATH . 'include/session.php');
 
 // Initialise l'API pour l'utilisateur connecté
-$id = isset($_SESSION['id']) ? $_SESSION['id'] : null;
+$id = null;
+if(isset($_GET['api_key'])){
+	$results = $db->getRowsFromQuery("SELECT * FROM `users` WHERE `api_key`='".$_GET['api_key']."'");
+	if(!empty($results)){
+		$id = $results[0]['id'];
+	}
+}
 $api = new Api($id);
 
 // Charge les fonctions utiles
@@ -273,4 +279,5 @@ require(ABSPATH . 'include/functions.php');
 if(!isset($ajax)){
 	require(ABSPATH . 'include/dispatcher.php');
 }
+
 ?>

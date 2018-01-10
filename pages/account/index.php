@@ -52,6 +52,11 @@
 						Quiz
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="#" data-content="api" class="nav-link">
+						API
+					</a>
+				</li>
 			</ul>
 			<div id="details-content" class="mt-2">
 				<section id="preferences-user" class="mx-0 px-0 container placeholders d-none">
@@ -137,6 +142,14 @@
 						</form>
 					<?php endforeach ?>
 				</section>
+				<section id="api" class="mx-0 px-0 container placeholders d-none">
+					<label id="activate-api" class="control control-checkbox" style="width:fit-content">
+	                    Activer l'API
+	                    <input type="checkbox" name="api" value="api" <?php $_SESSION['api_key'] != null ? print 'checked="checked"':print ''?>/>
+	                    <div class="control_indicator"></div>
+	                </label>
+	                Clef: <span id="api-value"><?= isset($_SESSION['api_key']) ? print $_SESSION['api_key'] : print '' ?></span>
+				</section>
 			</div>
 		</div>
 	</div>
@@ -167,6 +180,13 @@
 				$(this).addClass('active');
 				$('.quiz').addClass('d-none');
 				$('#' + $(this).attr('data-content')).removeClass('d-none');
+			});
+
+			// Activation APIt
+			$('#activate-api input').click(function(){
+				$.get("ajax/activationApi", {activation: $(this).prop("checked")}, function(data){
+					$('#api-value').html(data);
+				});
 			});
 		});
 

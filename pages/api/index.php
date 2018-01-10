@@ -66,7 +66,7 @@
 						$urlParam = count($params) > 0 ? "?" : "";
 						foreach($params as $index => $param){
 							if($index != 0) $urlParam.= "&";
-							$urlParam .= $param->getName() . "=" . $param->getDefaultValue();
+							$urlParam .= $param->getName() . "=" . (is_null($param->getDefaultValue()) ? "null" : $param->getDefaultValue());
 						}
 						?>
 						<a href="<?=ABSURL?>api/<?= $method->getName() . $urlParam ?>" class="method-name"><?= $method->getName() ?></a> (

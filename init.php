@@ -263,7 +263,11 @@ die();
 require(ABSPATH . 'include/session.php');
 
 // Initialise l'API pour l'utilisateur connecté
-$id = null;
+if(isset($_SESSION['id'])){
+	$id = $_SESSION['id'];
+}else{
+	$id = null;
+}
 if(isset($_GET['api_key'])){
 	$results = $db->getRowsFromQuery("SELECT * FROM `users` WHERE `api_key`='".$_GET['api_key']."'");
 	if(!empty($results)){

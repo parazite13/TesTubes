@@ -66,11 +66,11 @@
 						Ajouter une question
 					</a>
 				</li>
-				<li class="nav-item">
+				<!-- <li class="nav-item">
 					<a href="#" data-content="quizz-section" class="nav-link">
 						Ajouter un quizz
 					</a>
-				</li>
+				</li> -->
 			</ul>
 
 			<div id="details-content">

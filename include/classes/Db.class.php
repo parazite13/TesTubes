@@ -20,7 +20,8 @@ class Db{
 			$this->bd = new PDO('mysql:host='. $this->host .';dbname='. $this->nomBd . ';charset=utf8', $this->user, $this->mdp, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 
 		}catch (Exception $e){
-			die("Impossible d'établir une connexion avec la BD veuillez vérifier le fichier de configuration<br>" . $e->getMessage());
+			throw new Exception
+			("Impossible d'établir une connexion avec la BD veuillez vérifier le fichier de configuration<br>" . $e->getMessage());
 		}
 	}
 
@@ -83,7 +84,8 @@ class Db{
 
 		// Si le tableau est trop grand
 		if(count($array) > $this->getColumnsCountFromTable($table)){
-			die("Il y a trop d'éléments dans le tableau pour la table: ". $table);
+			throw new Exception
+			("Il y a trop d'éléments dans le tableau pour la table: ". $table);
 
 		// S'il a exactement un element de moins
 		}else if(count($array) + 1 == $this->getColumnsCountFromTable($table)){
@@ -92,12 +94,14 @@ class Db{
 			if($this->getColumnsNamesFromTable($table)[0] == "id"){
 				$this->insertInto($table, array('id' => NULL) + $array);
 			}else{
-				die("Il y a pas assez d'éléments dans le tableau pour la table: ". $table);
+				throw new Exception
+				("Il y a pas assez d'éléments dans le tableau pour la table: ". $table);
 			}
 
 		// S'il n'y a pas assez d'éléments
 		}else if(count($array) + 1 < $this->getColumnsCountFromTable($table)){
-			die("Il y a pas assez d'éléments dans le tableau pour la table: ". $table);
+			throw new Exception
+			("Il y a pas assez d'éléments dans le tableau pour la table: ". $table);
 		
 		// Le cas normal
 		}else{

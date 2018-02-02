@@ -148,7 +148,8 @@
 	                    <input type="checkbox" name="api" value="api" <?php isset($_SESSION['api_key']) ? print 'checked="checked"':print ''?>/>
 	                    <div class="control_indicator"></div>
 	                </label>
-	                Clef : <span id="api-value"><?php isset($_SESSION['api_key']) && $_SESSION['api_key'] != null ? print $_SESSION['api_key'] : print '' ?></span>
+	                Clef : <span id="api-value"><?php isset($_SESSION['api_key']) && $_SESSION['api_key'] != null ? print $_SESSION['api_key'] : print '' ?></span><br>
+	                <a href="<?=ABSURL?>api">Accèder à l'API</a>
 				</section>
 			</div>
 		</div>

@@ -16,11 +16,13 @@
 	if(isset($_POST['username-inscr'] , $_POST['pwd-inscr'])){
 		//inclut l'utilisateur dans les users
 		$array = array( 'pseudo' => $_POST['username-inscr'], 
-						'password' => md5($_POST['pwd-inscr'])
+						'password' => md5($_POST['pwd-inscr']),
+						'api_key' => null
 					);
 		$db->insertInto('users', $array);
+		$id = $db->getLastInsertId();
 		//inclut des pref par défaut dans les prefs
-		$arrayPref = array( 'id_user' => $db->getLastInsertId(), 
+		$arrayPref = array( 'id_user' => $id, 
 							'titre' => 1,
 							'auteur' => 1,
 							'vues' => 1,
@@ -30,7 +32,7 @@
 						);
 		$db->insertInto('preferences', $arrayPref);
 		//inclut des pref par défaut dans les prefs des auteurs
-		$arrayPrefAuthor = array( 'id_user' => $db->getLastInsertId(), 
+		$arrayPrefAuthor = array( 'id_user' => $id, 
 							'titre' => 1,
 							'videos' => 1,
 							'date' => 1,
